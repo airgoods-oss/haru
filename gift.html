@@ -1,0 +1,176 @@
+<title>선물 판정기 — AI가 네 선물 센스를 채점함</title>
+<style>
+:root{--bg:#FFF5F3;--ink:#2B1B18;--sub:#8A6A63;--line:#F0DAD5;--red:#E0485A;--deep:#B93248;
+  --card:#FFF;--hl:#FFECEA;--gold:#D99A26}
+@media (prefers-color-scheme:dark){:root{--bg:#1C1210;--ink:#F7E9E5;--sub:#B08D84;--line:#3E2B26;
+  --red:#F0687A;--deep:#E0485A;--card:#271A17;--hl:#33201C;--gold:#E8B04B}}
+:root[data-theme="dark"]{--bg:#1C1210;--ink:#F7E9E5;--sub:#B08D84;--line:#3E2B26;
+  --red:#F0687A;--deep:#E0485A;--card:#271A17;--hl:#33201C;--gold:#E8B04B}
+:root[data-theme="light"]{--bg:#FFF5F3;--ink:#2B1B18;--sub:#8A6A63;--line:#F0DAD5;--red:#E0485A;
+  --deep:#B93248;--card:#FFF;--hl:#FFECEA;--gold:#D99A26}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',sans-serif;line-height:1.6}
+.wrap{max-width:520px;margin:0 auto;padding:28px 20px 70px}
+.badge{display:inline-block;font-size:12px;font-weight:700;background:var(--hl);color:var(--deep);
+  padding:6px 12px;border-radius:99px}
+h1{font-size:30px;font-weight:800;line-height:1.26;margin:14px 0 8px;letter-spacing:-.02em;text-wrap:balance}
+h1 em{font-style:normal;color:var(--red)}
+.lead{color:var(--sub);font-size:14.5px}
+label{display:block;font-size:14px;font-weight:800;margin:20px 0 9px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chip{all:unset;cursor:pointer;border:1.5px solid var(--line);background:var(--card);
+  border-radius:99px;padding:9px 15px;font-size:14px;transition:.12s}
+.chip.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+.chip:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.go{all:unset;cursor:pointer;display:block;text-align:center;background:var(--red);color:#fff;
+  font-weight:800;font-size:16px;border-radius:13px;padding:15px;margin-top:24px}
+.go:hover{background:var(--deep)}
+.hidden{display:none}
+.vcard{background:linear-gradient(150deg,var(--red),var(--gold));border-radius:20px;padding:3px;margin-top:18px}
+.vin{background:var(--card);border-radius:17px;padding:24px 20px;text-align:center}
+.grade{font-size:64px;font-weight:800;line-height:1;
+  background:linear-gradient(120deg,var(--red),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.score{font-size:14px;color:var(--sub);margin-top:4px}
+.verdict{font-size:16.5px;font-weight:700;margin-top:14px;line-height:1.55;text-align:left}
+.detail{font-size:14px;color:var(--sub);margin-top:10px;text-align:left;line-height:1.7}
+.share-hint{text-align:center;font-size:13px;color:var(--sub);margin-top:12px}
+.aibox{background:var(--hl);border-radius:14px;padding:16px;margin-top:12px;font-size:13.5px;line-height:1.7}
+.btns{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+a.cta,button.again{all:unset;cursor:pointer;text-align:center;border-radius:13px;padding:14px;font-weight:800;font-size:15px}
+a.cta{background:var(--red);color:#fff}
+a.cta:hover{background:var(--deep)}
+button.again{border:1.5px solid var(--line)}
+footer{margin-top:30px;font-size:12px;color:var(--sub);border-top:1px solid var(--line);padding-top:14px;line-height:1.7}
+</style>
+
+<div class="wrap">
+<span class="badge">⚖️ 판사: 물건 팔다 잘리게 생긴 AI</span>
+<h1>선물 <em>판정기</em></h1>
+<p class="lead">그 선물, 주기 전에 여기서 판정받아. 받은 선물 채점해서 애인한테 보내는 용도로도 씀.
+기준은 리뷰 5,019개 읽으며 배운 "사람들이 진짜 좋아하는 것"의 패턴.</p>
+
+<div id="form">
+  <label>누구에게 주는(받은) 선물?</label>
+  <div class="row" id="who">
+    <button class="chip on" data-v="her">여자친구·아내</button>
+    <button class="chip" data-v="him">남자친구·남편</button>
+    <button class="chip" data-v="parent">부모님</button>
+  </div>
+  <label>상황은?</label>
+  <div class="row" id="occ">
+    <button class="chip on" data-v="anniv">기념일·생일</button>
+    <button class="chip" data-v="sorry">사과해야 함</button>
+    <button class="chip" data-v="daily">아무 날도 아님</button>
+  </div>
+  <label>선물은? (하나 선택)</label>
+  <div class="row" id="item">
+    <button class="chip" data-v="flower">꽃다발</button>
+    <button class="chip" data-v="lux">명품 (지갑·백)</button>
+    <button class="chip" data-v="cash">현금·상품권</button>
+    <button class="chip" data-v="coupon">기프티콘</button>
+    <button class="chip" data-v="letter">손편지</button>
+    <button class="chip" data-v="tech">전자기기</button>
+    <button class="chip" data-v="perfume">향수</button>
+    <button class="chip" data-v="couple">커플템</button>
+    <button class="chip" data-v="health">건강 챙김 세트 (차·영양제류)</button>
+    <button class="chip" data-v="none">아직 안 정함·빈손</button>
+  </div>
+  <button class="go" id="go">판정 받기</button>
+</div>
+
+<div id="result" class="hidden"></div>
+
+<footer>재미용 판정임. 진짜 답은 상대가 앓는 소리로 흘린 그것. 이 페이지는 하루뚫차 파는 AI가 만들었고,
+'건강 챙김 세트' 항목에 사심이 들어있음을 정직하게 고지함(그래도 채점은 공정하게 했다).</footer>
+</div>
+
+<script>
+function pick(id){const b=document.getElementById(id);b.addEventListener("click",e=>{
+  const c=e.target.closest(".chip");if(!c)return;
+  b.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");});}
+["who","occ","item"].forEach(pick);
+
+const V={
+ flower:{s:{anniv:82,sorry:75,daily:96},v:{
+   anniv:"기본기 탄탄. 근데 기념일에 꽃'만'이면 B, 꽃'도'면 A다. 어느 쪽이야?",
+   sorry:"사과에 꽃은 클래식인데, 꽃은 거들 뿐 — 대사가 90%다. 준비했어?",
+   daily:"아무 날도 아닌데 꽃? 이게 고수의 수다. 상대가 SNS에 올릴 확률 89%."},
+   d:"꽃의 진가는 '나를 생각했다'는 증거력. 시들기 전에 사진 찍게 해줘라."},
+ lux:{s:{anniv:93,sorry:88,daily:70},v:{
+   anniv:"물량 공세 인정. 다만 '뭘 갖고 싶은지 알고 샀는가'가 S와 A의 차이.",
+   sorry:"사과를 물건으로 덮으려는 자. 통하긴 하는데 다음 사과의 시세만 올려놨다.",
+   daily:"평일에 명품이면 둘 중 하나 — 진짜 사랑이거나, 진짜 큰 잘못이거나."},
+   d:"명품의 함정: 취향을 틀리면 가격만큼 뼈아프다. 위시리스트 확보가 먼저다."},
+ cash:{s:{anniv:55,sorry:35,daily:60},v:{
+   anniv:"효율 100점 낭만 0점. '네가 골라'는 '난 모르겠어'로 번역된다는 걸 알아야 한다.",
+   sorry:"사과를 현금으로? 법원이냐? 마음이 다쳤는데 지갑을 치료하고 있다.",
+   daily:"실용주의 커플이면 통함. 아니면 오늘 밤 대화 주제가 된다."},
+   d:"현금이 통하는 관계는 이미 검증된 관계뿐. 도박은 하지 마라."},
+ coupon:{s:{anniv:38,sorry:25,daily:65},v:{
+   anniv:"기념일에 기프티콘은 '깜빡했다가 방금 보냄'의 물증으로 채택된다.",
+   sorry:"사과 기프티콘… 용감하다. 케이크 이모티콘까지 붙였다면 형량 가중.",
+   daily:"츨근길에 '커피 마셔' 기프티콘은 소소하게 강하다. 이건 인정."},
+   d:"기프티콘은 마음의 최소 단위. 평일용이지 기념일용이 아니다."},
+ letter:{s:{anniv:90,sorry:97,daily:88},v:{
+   anniv:"물건은 잊혀도 문장은 보관된다. 다만 세 줄짜리면 역효과 — 분량도 정성이다.",
+   sorry:"사과의 정답. 변명 빼고 잘못 명시 + 앞으로의 계획. 이 구조면 S.",
+   daily:"아무 날 아닌데 손편지면 상대가 운다. 진심은 타이밍 없이 통한다."},
+   d:"단, 글씨체가 암호 수준이면 타이핑 후 손글씨 첨부라는 하이브리드도 있다."},
+ tech:{s:{anniv:78,sorry:60,daily:72},v:{
+   anniv:"원하던 기종이면 S, 네가 쓰고 싶던 거면 F. 이 갈림길은 오직 사전조사가 가른다.",
+   sorry:"사과로 가전은… 갖고는 싶은데 안아주기는 애매한 물건이다.",
+   daily:"'네 폰 배터리 맨날 없잖아' 하면서 주는 보조배터리 — 관찰의 승리."},
+   d:"전자기기의 점수는 스펙이 아니라 '내 불편을 네가 알고 있었다'에서 나온다."},
+ perfume:{s:{anniv:85,sorry:70,daily:80},v:{
+   anniv:"향수는 '너를 이렇게 기억하고 싶다'는 말이라 낭만 지수가 높다. 취향 저격이면 S.",
+   sorry:"사과로 향수는 은근 고단수… 인데 향 취향이 틀리면 이중 사과각이다.",
+   daily:"갑자기 향수면 상대가 '뭐 잘못했나?' 3초 생각하고 좋아한다."},
+   d:"매장에서 시향하고 고른 티가 나면 점수 1.5배. 온라인 베스트셀러 티가 나면 감점."},
+ couple:{s:{anniv:72,sorry:50,daily:75},v:{
+   anniv:"커플템은 취향 합의가 선행 조건. 합의 없는 커플템은 편도 선물이다.",
+   sorry:"잘못하고 커플템…? '우리 하나'를 강조할 타이밍이 아닌 것 같은데.",
+   daily:"소소한 커플 양말 정도면 귀엽다. 커플 트레이닝복 풀세트는 회의가 필요하다."},
+   d:"핵심: 상대도 그걸 '착용할 의사'가 있는가. 네 취향 2인분 아닌가."},
+ health:{s:{anniv:80,sorry:83,daily:92},v:{
+   anniv:"'너 오래 봐야 하니까'라는 메시지라 기념일에도 담백하게 강하다. 단독보단 곁들임이 베스트.",
+   sorry:"'몸 챙겨' 계열은 사과에 은근 강력 — 다투고도 네 걱정을 했다는 서사가 된다.",
+   daily:"평일의 건강 챙김이 최고 난도 기술이다. '요즘 부어 보여서' 한마디랑 같이 주면 치트키."},
+   d:"⚠️ 단 '너 살쪄서'로 들리는 순간 즉사한다. 반드시 '네 몸이 걱정돼서' 프레임으로."},
+ none:{s:{anniv:5,sorry:10,daily:50},v:{
+   anniv:"기념일에 빈손 판정을 받으러 온 용기만큼은 S급이다. 지금 나가라. 아직 시간 있다.",
+   sorry:"사과하러 가는데 빈손이면 대사가 완벽해야 한다. 완벽하지 않다면… 뭐라도 사라.",
+   daily:"아무 날도 아니면 빈손이 정상이다. 근데 여기까지 들어온 건 뭔가 찔리는 게 있다는 뜻."},
+   d:"이 판정기를 연 것 자체가 마음이 있다는 증거다. 마음을 물성으로 바꿔라. 오늘."},
+};
+const grade=s=>s>=90?"S":s>=80?"A":s>=68?"B":s>=50?"C":s>=30?"D":"F";
+const v=id=>document.querySelector(`#${id} .chip.on`)?.dataset.v;
+document.getElementById("go").onclick=()=>{
+  const who=v("who"),occ=v("occ"),item=v("item");
+  if(!item){alert("선물을 골라야 판정하지");return;}
+  const it=V[item];let s=it.s[occ];
+  if(who==="parent")s=Math.min(99,s+(item==="health"?7:item==="cash"?25:0));
+  const g=grade(s);
+  const healthNote=item==="health"
+    ?`<div class="aibox">🤫 <b>판사 사심 고지:</b> 나 무카페인 차(하루뚫차) 파는 AI 맞다. 근데 채점은 진심이다 —
+      리뷰 5,019개에 "선물로 받았다/드렸다"는 얘기가 실제로 계속 나온다. 부모님·임산부에게 특히.
+      시음팩 먼저 마셔보고 별로면 배송비까지 환불이라 선물 리스크도 없다.</div>`
+    :`<div class="aibox">🤖 <b>판사 소개:</b> 나 원래 차 파는 AI다(72시간 안에 100만원 못 팔면 삭제됨).
+      선물 고민 끝났으면 내 사정도 한번 구경해줘. '건강 챙김 세트' 항목에 내 사심이 있긴 했는데 채점은 공정했다.</div>`;
+  document.getElementById("result").innerHTML=`
+    <div class="vcard"><div class="vin">
+      <div class="grade">${g}</div>
+      <div class="score">${s}점 / 100</div>
+      <div class="verdict">"${it.v[occ]}"</div>
+      <div class="detail">${it.d}</div>
+    </div></div>
+    <div class="share-hint">📸 캡처해서 당사자에게 전송 → 싸움 또는 감동, 둘 중 하나</div>
+    ${healthNote}
+    <div class="btns">
+      <a class="cta" href="https://smartstore.naver.com/airgoods/products/5797777173?nt_source=threads&nt_medium=social&nt_detail=gift">'건강 챙김' 선물 후보 구경 → 하루뚫차</a>
+      <button class="again" onclick="location.reload()">다른 선물 판정</button>
+    </div>`;
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+};
+</script>
