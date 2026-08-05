@@ -59,9 +59,13 @@ h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;c
   transform:skewX(-20deg);animation:shine 3.2s infinite}
 @keyframes shine{0%{left:-60%}60%,100%{left:130%}}
 .fine{text-align:center;color:var(--faint);font-size:12.5px;margin:14px 0 40px}
-.qhead{display:flex;align-items:center;justify-content:space-between;margin-top:44px}
+.qhead{display:flex;align-items:center;justify-content:space-between;margin-top:44px;min-height:30px}
 .qcount{font-size:13px;color:var(--sub);font-weight:600}
 .qcount b{color:var(--blue2)}
+.backbtn{all:unset;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700;color:var(--blue2);
+  background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:7px 13px;transition:.13s}
+.backbtn:active{transform:scale(.95)}
+.qhead .backbtn.hidden+.qcount,.qhead .backbtn.hidden{}
 .prog{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:14px}
 .prog>i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;
   transition:width .45s cubic-bezier(.4,0,.2,1)}
@@ -140,7 +144,10 @@ footer{color:var(--faint);font-size:11px;line-height:1.7;margin:26px 0 20px;text
 </div>
 
 <div id="quiz" class="scr hidden">
-  <div class="qhead"><span class="qcount">Q<b id="qn">1</b> / 7</span></div>
+  <div class="qhead">
+    <button id="back" class="backbtn hidden">← 이전</button>
+    <span class="qcount">Q<b id="qn">1</b> / 7</span>
+  </div>
   <div class="prog"><i id="bar"></i></div>
   <p class="q" id="qtext"></p>
   <div class="opts" id="opts"></div>
@@ -204,17 +211,29 @@ const T={
    ["잠수했을 때 폭발하지 마라. 돌아왔을 때 비난 없이 맞아주면 신뢰가 생긴다.","기대는 낮추되 포기는 말고. 이 유형은 시간과 안전으로 변한다."],"ST","안정형의 꾸준함이 유일한 해답"],
 };
 const $=id=>document.getElementById(id);
-let idx=0,sc={S:0,A:0,X:0,T:0,B:0},lock=false;
-$("start").onclick=()=>{$("intro").classList.add("hidden");$("quiz").classList.remove("hidden");render()};
-function render(){
+let idx=0,sc={S:0,A:0,X:0,T:0,B:0},lock=false,hist=[]; // hist[i]={key, ai}
+$("start").onclick=()=>{idx=0;hist=[];sc={S:0,A:0,X:0,T:0,B:0};
+  $("intro").classList.add("hidden");$("quiz").classList.remove("hidden");render()};
+$("back").onclick=()=>{
+  if(idx<=0||lock)return;
+  idx--;
+  const prev=hist.pop();          // 이전 답 되돌리기
+  if(prev)sc[prev.key]--;
+  render(prev?prev.ai:-1);
+};
+function render(prevAi){
   const q=Q[idx];lock=false;
   $("qn").textContent=idx+1;$("bar").style.width=(idx/Q.length*100)+"%";
+  $("back").classList.toggle("hidden",idx===0);
   const qt=$("qtext");qt.style.animation="none";void qt.offsetWidth;qt.style.animation="";qt.textContent=q.q;
   const box=$("opts");box.innerHTML="";
-  q.a.forEach(([t,k])=>{
+  q.a.forEach(([t,k],ai)=>{
     const b=document.createElement("button");b.className="opt";b.innerHTML='<span class="ic"></span>'+t;
-    b.onclick=()=>{if(lock)return;lock=true;b.classList.add("sel");sc[k]++;
-      setTimeout(()=>{idx++;idx<Q.length?render():judge()},260)};
+    if(ai===prevAi)b.classList.add("sel");   // 되돌아왔을 때 이전 선택 표시
+    b.onclick=()=>{if(lock)return;lock=true;
+      box.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"));
+      b.classList.add("sel");sc[k]++;hist.push({key:k,ai:ai});
+      setTimeout(()=>{idx++;idx<Q.length?render(-1):judge()},260)};
     box.appendChild(b);
   });
 }
