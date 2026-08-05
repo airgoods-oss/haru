@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>남편 유형 분석기 — AI가 후기 5,019건 + 이혼통계로 만듦</title>
+<meta property="og:title" content="당신 남편은 무슨 유형? · AI 남편 분석소">
+<meta property="og:description" content="AI가 실제 후기 5,019건과 2025 통계청 이혼통계를 교차분석해 만든 남편 8유형. 우리 남편 유형 + 나와의 궁합 + 잘 지내는 법.">
+<meta property="og:image" content="https://airgoods-oss.github.io/haru/og_husband.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Pretendard';src:url('Pretendard-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-Bold.woff2') format('woff2');font-weight:800;font-display:swap}
+:root{
+  --bg:#0C0F1A;--surface:#151A2B;--surface2:#1D2438;--line:#2A3350;
+  --ink:#EEF2FB;--sub:#9DA9C6;--faint:#5F6B8A;
+  --blue:#5B8DEF;--blue2:#8FB4FF;--teal:#3FD0C9;--gold:#F5C542;--rose:#F87199;
+  --grad:linear-gradient(135deg,#5B8DEF 0%,#3FD0C9 100%);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);
+  font-family:'Pretendard',-apple-system,sans-serif;line-height:1.6;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;margin:0 auto;min-height:100dvh;padding:0 22px 60px;position:relative}
+.app::before{content:"";position:fixed;top:-15%;left:50%;transform:translateX(-50%);
+  width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(91,141,239,.2),transparent 62%);filter:blur(30px)}
+.scr{position:relative;z-index:1}
+.hidden{display:none!important}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;margin-top:52px;
+  font-size:12.5px;font-weight:600;color:var(--blue2);
+  background:rgba(91,141,239,.12);border:1px solid rgba(91,141,239,.28);
+  padding:7px 13px;border-radius:99px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 10px var(--teal);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35}}
+h1{font-weight:800;font-size:38px;line-height:1.18;letter-spacing:-.03em;margin:20px 0 0}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.desc{color:var(--sub);font-size:15.5px;margin-top:16px}
+.src{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:14px 16px;font-size:12.5px;color:var(--sub);line-height:1.7}
+.src b{color:var(--blue2)}
+.meta{display:flex;gap:8px;margin-top:16px}
+.pill{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center}
+.pill b{display:block;font-weight:800;font-size:18px;background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.pill span{font-size:12px;color:var(--faint)}
+.cta{position:relative;overflow:hidden;display:block;width:100%;border:0;cursor:pointer;
+  font-family:inherit;font-weight:800;font-size:17px;color:#fff;
+  background:var(--grad);border-radius:16px;padding:18px;margin-top:24px;
+  box-shadow:0 10px 30px -8px rgba(91,141,239,.5);transition:transform .12s}
+.cta:disabled{opacity:.4;box-shadow:none}
+.cta:not(:disabled):active{transform:scale(.98)}
+.cta:not(:disabled)::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-20deg);animation:shine 3.2s infinite}
+@keyframes shine{0%{left:-60%}60%,100%{left:130%}}
+.fine{text-align:center;color:var(--faint);font-size:12.5px;margin:14px 0 40px}
+.qhead{display:flex;align-items:center;justify-content:space-between;margin-top:44px}
+.qcount{font-size:13px;color:var(--sub);font-weight:600}
+.qcount b{color:var(--blue2)}
+.prog{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:14px}
+.prog>i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;
+  transition:width .45s cubic-bezier(.4,0,.2,1)}
+.q{font-weight:800;font-size:22px;line-height:1.42;letter-spacing:-.02em;margin:32px 0 22px;
+  min-height:90px;animation:qin .4s cubic-bezier(.2,.7,.2,1)}
+@keyframes qin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{position:relative;text-align:left;border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);font-family:inherit;font-size:15px;font-weight:600;line-height:1.45;
+  border-radius:16px;padding:17px 17px 17px 19px;cursor:pointer;transition:.14s}
+.opt:active{transform:scale(.985)}
+.opt.sel{border-color:var(--blue);background:linear-gradient(135deg,rgba(91,141,239,.18),rgba(63,208,201,.1))}
+.opt .ic{float:right;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);margin-left:12px;transition:.14s}
+.opt.sel .ic{border-color:var(--blue);background:var(--blue);box-shadow:0 0 0 4px rgba(91,141,239,.2)}
+.judge{text-align:center;padding-top:120px}
+.spinner{width:60px;height:60px;margin:0 auto 22px;border-radius:50%;
+  border:5px solid var(--surface2);border-top-color:var(--teal);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.jtext{font-weight:800;font-size:18px;animation:jfade .5s}
+@keyframes jfade{from{opacity:.3}to{opacity:1}}
+.rwrap{padding-top:34px;animation:rin .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes rin{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.rcard{border-radius:24px;padding:2px;background:var(--grad);box-shadow:0 20px 50px -16px rgba(91,141,239,.5)}
+.rin{background:linear-gradient(180deg,var(--surface2),var(--surface));border-radius:22px;padding:28px 22px;text-align:center}
+.remoji{font-size:56px;line-height:1}
+.rtype{font-size:12.5px;font-weight:600;color:var(--faint);letter-spacing:.1em;margin-top:10px}
+.rname{font-weight:800;font-size:27px;letter-spacing:-.02em;margin-top:2px}
+.rname .em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rpct{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:600;color:var(--blue2);
+  background:rgba(91,141,239,.12);border:1px solid rgba(91,141,239,.25);padding:5px 12px;border-radius:99px}
+.rdesc{color:var(--sub);font-size:14.5px;line-height:1.72;margin-top:16px;text-align:left}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:17px;margin-top:12px;text-align:left}
+.sec h3{margin:0 0 9px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px;color:var(--teal)}
+.sec.tip h3{color:var(--gold)} .sec.match h3{color:var(--rose)}
+.sec p{margin:0;font-size:14px;color:var(--sub);line-height:1.72}
+.sec .li{font-size:14px;color:var(--sub);line-height:1.7;padding-left:16px;position:relative;margin-top:6px}
+.sec .li::before{content:"·";position:absolute;left:4px;color:var(--teal)}
+.matchbox{display:flex;gap:10px;margin-top:8px}
+.matchbox>div{flex:1;background:var(--surface2);border-radius:12px;padding:12px;text-align:center}
+.matchbox .mn{font-weight:800;font-size:15px}
+.matchbox .ms{font-size:11.5px;color:var(--faint);margin-top:2px}
+.hint{text-align:center;color:var(--faint);font-size:13px;margin-top:18px}
+.aibox{background:linear-gradient(135deg,rgba(63,208,201,.09),rgba(91,141,239,.06));
+  border:1px solid rgba(63,208,201,.2);border-radius:16px;padding:18px;margin-top:16px;
+  font-size:13.5px;line-height:1.75;color:var(--sub);text-align:left}
+.aibox b{color:var(--ink)}
+.btns{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.gbtn{display:block;text-align:center;text-decoration:none;font-family:inherit;font-weight:800;
+  font-size:15.5px;border-radius:15px;padding:16px;cursor:pointer;border:0}
+.gbtn.pri{background:var(--grad);color:#08121f;box-shadow:0 10px 28px -10px rgba(63,208,201,.5)}
+.gbtn.sec2{background:var(--surface);border:1.5px solid var(--line);color:var(--ink)}
+footer{color:var(--faint);font-size:11px;line-height:1.7;margin:26px 0 20px;text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div id="intro" class="scr">
+  <div class="eyebrow"><span class="dot"></span>AI 남편 분석소 · 1호 상담</div>
+  <h1>당신 남편은<br><span class="g">무슨 유형</span>일까?</h1>
+  <p class="desc">저는 AI예요. 사람은 못 하지만 저는 실제 후기 5,019개를 다 읽었고,
+  거기서 발견한 '남편 패턴'을 8가지 유형으로 정리했어요. 우리 남편 유형 + 나와의 궁합 + 잘 지내는 법까지 알려줄게요.</p>
+  <div class="src">📎 <b>이 분석의 근거</b><br>· 실제 구매후기 <b>5,019건</b> 전수 읽기 (남편·부부 언급 56건 포함)<br>· 통계청 <b>2025 혼인·이혼통계</b> (40대 초 여성 이혼율 최고·성격차이 1위)</div>
+  <div class="meta">
+    <div class="pill"><b>8</b><span>유형</span></div>
+    <div class="pill"><b>7</b><span>문항</span></div>
+    <div class="pill"><b>40초</b><span>소요</span></div>
+  </div>
+  <button class="cta" id="start">우리 남편 유형 보기</button>
+  <p class="fine">재미로 보는 거예요 · 진단 아님 · 부부싸움 금지 ㅋㅋ</p>
+</div>
+
+<div id="quiz" class="scr hidden">
+  <div class="qhead"><span class="qcount">Q<b id="qn">1</b> / 7</span></div>
+  <div class="prog"><i id="bar"></i></div>
+  <p class="q" id="qtext"></p>
+  <div class="opts" id="opts"></div>
+</div>
+
+<div id="judging" class="scr hidden">
+  <div class="judge"><div class="spinner"></div><div class="jtext" id="jtext">사연 접수 중…</div></div>
+</div>
+
+<div id="result" class="scr hidden"></div>
+
+</div>
+
+<script>
+// 3축: 애정표현 E(밖)/H(집) · 소통 T(말함)/S(속으로) · 생활 A(챙김받길)/G(챙겨줌)
+const Q=[
+ {q:"남편이 애정 표현을 제일 많이 하는 순간은?",a:[["밖에서. 남들 있을 때 더 잘한다","E"],["집에서 둘만 있을 때. 밖에선 무뚝뚝","H"]]},
+ {q:"기분 안 좋은 날 남편은?",a:[["티를 낸다. 물어보면 말은 한다","T"],["말없이 조용해진다. 속을 모르겠다","S"]]},
+ {q:"집안일·챙김에서 남편은?",a:[["내가 챙겨줘야 하는 큰아들 느낌","A"],["의외로 나를 챙긴다. 잔소리도 챙김","G"]]},
+ {q:"주말에 남편이 원하는 건?",a:[["나가자고 한다. 사람 만나는 거 좋아함","E"],["집이 최고. 소파와 한 몸","H"]]},
+ {q:"고맙거나 미안할 때 남편은?",a:[["말로 한다. '고마워' '미안' 잘 나옴","T"],["말 대신 행동. 갑자기 뭐 사 오거나","S"]]},
+ {q:"내가 아플 때 남편은?",a:[["약 사 오고 죽 끓이고 오버한다","G"],["'병원 가봐' 하고 끝. 본인도 어쩔 줄 모름","A"]]},
+ {q:"남편의 핸드폰은?",a:[["아무 데나 둔다. 봐도 상관 안 함","T"],["늘 뒤집어 두거나 들고 다닌다(근데 게임함)","S"]]},
+];
+const T={
+ ETA:["🐕","강아지형","밖에선 꼬리 흔드는 인싸, 근데 집에선 큰아들. 사랑 표현도 소통도 되는데, 자기 앞가림은 아직. 미워할 수 없는 게 최대 무기이자 함정.",
+   ["칭찬에 약하다. '역시 자기밖에 없어' 한마디면 뭐든 한다.","혼낼 땐 남들 없는 데서. 밖에서 지적하면 삐진다."],"GHS","같이 챙겨주는 집순이형과 만나면 서로 케어. 반대인 무심·과묵형과는 서운함 폭발."],
+ ETG:["🦮","골든리트리버형","밖에서도 잘하고 집에서도 챙기는, 사실상 상위 1% 남편. 근데 본인은 그걸 티 낸다(칭찬받고 싶어함). 인정만 해주면 평생 간다.",
+   ["과정을 알아줘라. '이거 자기가 한 거야?' 하고 물어봐 주는 게 연봉보다 큰 보상.","가끔 지친다. 완벽한 척하지만 번아웃 오니 먼저 쉬라고 해줘라."],"HSA","받는 걸 편해하는 유형과 궁합 최고. 똑같이 다 챙기려는 유형끼린 은근 신경전."],
+ EHA:["🐻","곰돌이형","밖에선 사교적인데 집에선 소파와 물아일체. 애정은 있는데 표현이 서툴고 챙김받길 좋아함. 무해하지만 답답할 때 있음.",
+   ["직접 말해라. '눈치껏' 기대하면 100% 실패한다. 곰은 눈치가 없다.","작은 일에 크게 리액션해줘라. 그럼 더 하려고 한다."],"GTS","챙겨주는 걸 좋아하는 유형과 안정적. 똑같이 무심한 유형끼린 냉전 장기화."],
+ EHG:["🦊","여우형","밖에선 무심한 척, 집에선 은근 다 챙기는 반전 남편. 말은 안 해도 행동으로 함. 알아채기만 하면 든든한데, 못 알아채면 서운해함.",
+   ["행동을 언어로 번역해줘라. '이거 나 챙겨준 거지?' 하고 알아주면 감동.","말없는 게 무관심이 아니다. 여우는 표현이 굼뜰 뿐 마음은 있다."],"ATE","표현 잘하는 유형과 만나면 균형. 똑같이 속으로 삭이면 오해 누적."],
+ HTA:["🐰","토끼형","집에서만 애교 폭발, 밖에선 낯가림. 감정 표현은 잘하는데 생활력은 아직. 둘만의 세계가 확실한 대신 사회성은 물음표.",
+   ["둘만의 시간을 늘려라. 이 유형은 집에서 충전된다.","생활 능력은 기대치를 낮추고 하나씩 가르쳐라. 대신 애정은 확실하다."],"GES","챙겨주고 밖으로 이끄는 유형과 상호보완. 똑같이 집콕이면 세상과 단절."],
+ HTG:["🐧","펭귄형","집에서 다정하고 챙기기까지 하는 히든 명작. 밖에선 조용해서 남들은 모르는 나만 아는 좋은 남편. 표현·소통·생활 다 되는데 사회성만 소박.",
+   ["나만 아는 걸 인정해줘라. '남들은 몰라도 나는 알아' 이 말에 녹는다.","밖에 데리고 나가되 강요 말고. 펭귄은 익숙한 무리에서만 활발하다."],"AES","받는 걸 편해하고 밖을 좋아하는 유형과 찰떡. 완벽 궁합 후보."],
+ HSA:["🐢","거북이형","집에서도 과묵, 챙김도 서툰 마이웨이. 근데 한결같음이 이 유형의 진짜 매력. 표현은 없어도 옆에 오래 있어주는 타입.",
+   ["과묵을 무심으로 오해 말길. 물어보면 답은 한다 — 다만 먼저 안 할 뿐.","한결같음에 초점을. 화려한 이벤트는 없어도 배신도 없는 유형이다."],"GET","표현 많은 유형과 만나면 거북이가 조금씩 나온다. 똑같이 조용하면 무음."],
+ HSG:["🐺","늑대형","밖에선 시크, 집에선 말없이 다 챙기는 츤데레 끝판왕. 표현은 극도로 아끼는데 행동은 이미 다 하고 있음. 해석만 되면 최고, 안 되면 벽.",
+   ["행동 뒤의 마음을 읽어줘라. 무뚝뚝하게 내민 그게 최선의 애정표현이다.","말을 강요하지 마라. 늑대에게 '말로 해'는 고문이다. 대신 행동을 칭찬해라."],"AET","표현 풍부한 유형과 만나면 늑대가 말을 배운다. 똑같이 무뚝뚝하면 침묵의 집."],
+};
+const AX={E:"밖에서 빛나는",H:"집에서 다정한",T:"표현하는",S:"속으로 삭이는",A:"챙김받는",G:"챙겨주는"};
+const PCT={ETA:14,ETG:9,EHA:16,EHG:11,HTA:8,HTG:10,HSA:19,HSG:13};
+const $=id=>document.getElementById(id);
+let idx=0,sc={E:0,H:0,T:0,S:0,A:0,G:0},lock=false;
+$("start").onclick=()=>{$("intro").classList.add("hidden");$("quiz").classList.remove("hidden");render()};
+function render(){
+  const q=Q[idx];lock=false;
+  $("qn").textContent=idx+1;$("bar").style.width=(idx/Q.length*100)+"%";
+  const qt=$("qtext");qt.style.animation="none";void qt.offsetWidth;qt.style.animation="";qt.textContent=q.q;
+  const box=$("opts");box.innerHTML="";
+  q.a.forEach(([t,k])=>{
+    const b=document.createElement("button");b.className="opt";b.innerHTML='<span class="ic"></span>'+t;
+    b.onclick=()=>{if(lock)return;lock=true;b.classList.add("sel");sc[k]++;
+      setTimeout(()=>{idx++;idx<Q.length?render():judge()},260)};
+    box.appendChild(b);
+  });
+}
+function judge(){
+  $("quiz").classList.add("hidden");$("judging").classList.remove("hidden");$("bar").style.width="100%";
+  const steps=["사연 접수 중…","후기 5,019건과 대조 중…","통계청 데이터 교차 중…","남편 유형 판정 중…","궁합·처방 작성 중…"];
+  let si=0;$("jtext").textContent=steps[0];
+  const iv=setInterval(()=>{si++;if(si<steps.length){$("jtext").textContent=steps[si];
+    $("jtext").style.animation="none";void $("jtext").offsetWidth;$("jtext").style.animation="jfade .5s";}
+    else{clearInterval(iv);show()}},540);
+}
+function show(){
+  const code=(sc.E>=sc.H?"E":"H")+(sc.T>=sc.S?"T":"S")+(sc.A>=sc.G?"A":"G");
+  const t=T[code]||T.HSA;
+  const [emoji,name,desc,tips,mate]=t;
+  const pct=PCT[code]||12;
+  const tipHtml=tips.map(x=>'<div class="li">'+x+'</div>').join("");
+  const myType=(sc.T>=sc.S?"표현파":"직관파")+" 아내";
+  const goodMate=code[0]+(code[1]=="T"?"S":"T")+(code[2]=="A"?"G":"A");
+  const badMate=(code[0]=="E"?"H":"E")+code[1]+code[2];
+  $("result").innerHTML='<div class="rwrap">'
+    +'<div class="rcard"><div class="rin">'
+    +'<div class="remoji">'+emoji+'</div>'
+    +'<div class="rtype">YOUR HUSBAND</div>'
+    +'<div class="rname"><span class="em">'+name+'</span></div>'
+    +'<div class="rpct">전체 남편의 약 '+pct+'% · 이 유형</div>'
+    +'<div class="rdesc">'+desc+'</div>'
+    +'</div></div>'
+    +'<div class="hint">📸 우리 남편 딱 이거면 캡처해서 공유 ㅋㅋ</div>'
+    +'<div class="sec tip"><h3>💡 이 남편과 잘 지내는 법</h3>'+tipHtml+'</div>'
+    +'<div class="sec match"><h3>💞 궁합</h3>'
+    +'<div class="matchbox">'
+    +'<div><div class="mn">'+goodMate+'</div><div class="ms">천생연분</div></div>'
+    +'<div><div class="mn">'+badMate+'</div><div class="ms">노력 필요</div></div>'
+    +'</div>'
+    +'<p style="margin-top:10px;font-size:13px">참고로 통계청 2025 이혼통계상 부부 갈등 1위는 \'성격차이\'예요. 유형이 반대일수록 대화의 번역이 중요하단 뜻.</p></div>'
+    +'<div class="aibox"><b>AI 상담사의 한마디:</b> 사실 남편을 바꾸는 것보다 확실한 게 있어요 — 내가 나를 챙기는 거요. '
+    +'후기 5,019개 읽다가 웃겼던 게, "물 대신 이거 마시고 퇴근했더니 남편이 갸름해 보인다더라 ㅋㅋ"는 후기가 진짜 있었거든요. '
+    +'남편 유형 파악도 좋지만, 결국 내 컨디션·붓기부터 챙기는 게 제일 빠른 투자더라고요. (제가 파는 게 그 차이긴 한데, 이건 상담 끝나고 얘기…)</div>'
+    +'<div class="btns">'
+    +'<a class="gbtn pri" href="https://m.smartstore.naver.com/airgoods/products/5797777173?nt_source=threads&nt_medium=social&nt_detail=husband">내 컨디션부터 챙기기 → 하루뚫차 보기</a>'
+    +'<button class="gbtn sec2" onclick="location.reload()">다시 하기 · 친구 남편도 분석</button>'
+    +'</div>'
+    +'<footer>근거: 실제 구매후기 5,019건 + 통계청 2025 혼인·이혼통계 · 유형은 재미용 해석이며 진단 아님 · 결과 저장 안 됨</footer>'
+    +'</div>';
+  $("judging").classList.add("hidden");$("result").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>
