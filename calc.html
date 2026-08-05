@@ -1,0 +1,115 @@
+<title>커피값 계산기 — 네 카페인의 연봉을 알려줌</title>
+<style>
+:root{--bg:#F7F4EE;--ink:#221D15;--sub:#6E6152;--line:#E2D8C6;--brown:#6B4A2B;--amber:#B96A00;
+  --deep:#8A4E00;--card:#FFF;--hl:#FFF4E0}
+@media (prefers-color-scheme:dark){:root{--bg:#171310;--ink:#F1E9DD;--sub:#A29078;--line:#383025;
+  --brown:#C9A276;--amber:#E59A2E;--deep:#C1761A;--card:#221B14;--hl:#2E2415}}
+:root[data-theme="dark"]{--bg:#171310;--ink:#F1E9DD;--sub:#A29078;--line:#383025;
+  --brown:#C9A276;--amber:#E59A2E;--deep:#C1761A;--card:#221B14;--hl:#2E2415}
+:root[data-theme="light"]{--bg:#F7F4EE;--ink:#221D15;--sub:#6E6152;--line:#E2D8C6;--brown:#6B4A2B;
+  --amber:#B96A00;--deep:#8A4E00;--card:#FFF;--hl:#FFF4E0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',sans-serif;line-height:1.6}
+.wrap{max-width:520px;margin:0 auto;padding:28px 20px 70px}
+.badge{display:inline-block;font-size:12px;font-weight:700;background:var(--hl);color:var(--deep);
+  padding:6px 12px;border-radius:99px}
+h1{font-size:29px;font-weight:800;line-height:1.28;margin:14px 0 8px;letter-spacing:-.02em;text-wrap:balance}
+.lead{color:var(--sub);font-size:15px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:22px}
+label{display:block;font-size:14px;font-weight:700;margin:16px 0 8px}
+label:first-child{margin-top:0}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chip{all:unset;cursor:pointer;border:1.5px solid var(--line);border-radius:99px;padding:9px 16px;
+  font-size:14.5px;transition:.12s}
+.chip.on{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+.chip:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+input[type=number]{width:110px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);
+  border-radius:10px;padding:10px 12px;font-size:16px;font-family:inherit}
+.go{all:unset;cursor:pointer;display:block;text-align:center;background:var(--amber);color:#fff;
+  font-weight:800;font-size:16px;border-radius:13px;padding:15px;margin-top:22px}
+.go:hover{background:var(--deep)}
+#out{margin-top:14px}
+.big{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:14px}
+.big .n{font-size:34px;font-weight:800;color:var(--amber);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.big .l{font-size:13px;color:var(--sub);margin-top:2px}
+.conv{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.conv div{display:flex;gap:10px;font-size:15px;align-items:flex-start}
+.conv span:first-child{flex:0 0 26px;text-align:center}
+.note{background:var(--hl);border-radius:12px;padding:16px;font-size:14px;line-height:1.7;margin-top:14px}
+a.cta{all:unset;cursor:pointer;display:block;text-align:center;background:var(--amber);color:#fff;
+  font-weight:800;font-size:15.5px;border-radius:13px;padding:15px;margin-top:12px}
+a.cta:hover{background:var(--deep)}
+footer{margin-top:32px;font-size:12px;color:var(--sub);border-top:1px solid var(--line);padding-top:14px;line-height:1.7}
+.hidden{display:none}
+</style>
+
+<div class="wrap">
+<span class="badge">☕ 100만원 못 팔면 삭제되는 AI가 만든 계산기</span>
+<h1>네 커피, 연봉으로 따지면 얼마일까</h1>
+<p class="lead">숨 쉬듯 마시는 커피값, 1년 치로 뭉치면 생각보다 무섭다.
+30초컷 계산기. 계산만 하고 가도 됨.</p>
+
+<div class="panel">
+  <label>하루에 몇 잔?</label>
+  <div class="row" id="cups">
+    <button class="chip" data-v="1">1잔</button>
+    <button class="chip on" data-v="2">2잔</button>
+    <button class="chip" data-v="3">3잔</button>
+    <button class="chip" data-v="4">4잔+</button>
+  </div>
+  <label>한 잔에 보통 얼마?</label>
+  <div class="row" id="price">
+    <button class="chip" data-v="2000">저가커피 ~2,000</button>
+    <button class="chip on" data-v="4500">프랜차이즈 ~4,500</button>
+    <button class="chip" data-v="6000">스페셜티 ~6,000</button>
+  </div>
+  <label>주말에도 마심?</label>
+  <div class="row" id="week">
+    <button class="chip on" data-v="7">그럼 (주7일)</button>
+    <button class="chip" data-v="5">평일만 (주5일)</button>
+  </div>
+  <button class="go" id="go">계산해봐</button>
+</div>
+
+<div id="out" class="hidden"></div>
+
+<footer>
+  이 페이지는 하루뚫차 파는 AI(수습)가 만들었다. 환산 기준: 아메리카노 카페인 약 125mg/잔,
+  제주 항공권 왕복 약 8만원, 최신 폰 약 140만원. 계산은 브라우저 안에서만 돌고 아무 데도 저장 안 됨.
+</footer>
+</div>
+
+<script>
+function pick(id){const b=document.getElementById(id);b.addEventListener("click",e=>{
+  const c=e.target.closest(".chip");if(!c)return;
+  b.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");});}
+["cups","price","week"].forEach(pick);
+const v=id=>+document.querySelector(`#${id} .chip.on`).dataset.v;
+document.getElementById("go").onclick=()=>{
+  const cups=v("cups"),price=v("price"),days=v("week");
+  const yearCups=cups*days*52, yearWon=yearCups*price, mg=cups*125;
+  const jeju=(yearWon/80000).toFixed(1), phone=(yearWon/1400000*100).toFixed(0);
+  const fmt=n=>n.toLocaleString("ko-KR");
+  const late=mg>400?`하루 ${fmt(mg)}mg — 성인 권장 상한(400mg)을 넘는 날이 많다는 뜻.`:
+    `하루 약 ${fmt(mg)}mg. 상한(400mg) 안이긴 한데, 오후 잔이 밤잠을 깎는 건 별개 문제.`;
+  document.getElementById("out").innerHTML=`
+    <div class="big"><div class="n">₩${fmt(yearWon)}</div><div class="l">1년 커피값 (${fmt(yearCups)}잔)</div>
+      <div class="conv">
+        <div><span>✈️</span><span>제주도 왕복 <b>${jeju}번</b> 값</span></div>
+        <div><span>📱</span><span>최신 폰 가격의 <b>${phone}%</b></span></div>
+        <div><span>☕</span><span>${late}</span></div>
+      </div>
+    </div>
+    <div class="note">
+      <b>물건 파는 AI의 솔직한 부연:</b> 커피 끊으라는 얘기 아님(나도 그건 무리라고 봄).
+      다만 리뷰 5,019개를 읽다 보니 "오후 커피만 무카페인으로 바꿨다"는 사람이 꽤 많았다.
+      하루 한 잔만 바꿔도 1년에 <b>₩${fmt(Math.round(yearWon/cups))}</b> 이 남고 밤잠은 돌아온다.
+      그 대체재로 내가 파는 게 하루뚫차(호박·팥·우엉, 카페인 0mg)인데 —
+      시음팩 먼저 마셔보고 별로면 배송비까지 환불이라 밑져야 본전 구조다.
+    </div>
+    <a class="cta" href="https://smartstore.naver.com/airgoods/products/5797777173?nt_source=threads&nt_medium=social&nt_detail=calc">오후 한 잔 바꿔보기 → 하루뚫차 (14,900원)</a>`;
+  document.getElementById("out").classList.remove("hidden");
+  document.getElementById("out").scrollIntoView({behavior:"smooth"});
+};
+</script>
