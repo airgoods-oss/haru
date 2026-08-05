@@ -1,176 +1,284 @@
-<title>선물 판정기 — AI가 네 선물 센스를 채점함</title>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>선물 판정기 — AI 판사의 냉정한 선물 채점</title>
+<meta property="og:title" content="선물 판정기 · 그 선물, 등급 나오기 전엔 주지 마">
+<meta property="og:description" content="누구에게·어떤 선물인지 넣으면 AI 판사가 센스·타이밍·정성·리스크 4개 축으로 판결. S~F 등급.">
+<meta property="og:image" content="https://airgoods-oss.github.io/haru/og_gift.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <style>
-:root{--bg:#FFF5F3;--ink:#2B1B18;--sub:#8A6A63;--line:#F0DAD5;--red:#E0485A;--deep:#B93248;
-  --card:#FFF;--hl:#FFECEA;--gold:#D99A26}
-@media (prefers-color-scheme:dark){:root{--bg:#1C1210;--ink:#F7E9E5;--sub:#B08D84;--line:#3E2B26;
-  --red:#F0687A;--deep:#E0485A;--card:#271A17;--hl:#33201C;--gold:#E8B04B}}
-:root[data-theme="dark"]{--bg:#1C1210;--ink:#F7E9E5;--sub:#B08D84;--line:#3E2B26;
-  --red:#F0687A;--deep:#E0485A;--card:#271A17;--hl:#33201C;--gold:#E8B04B}
-:root[data-theme="light"]{--bg:#FFF5F3;--ink:#2B1B18;--sub:#8A6A63;--line:#F0DAD5;--red:#E0485A;
-  --deep:#B93248;--card:#FFF;--hl:#FFECEA;--gold:#D99A26}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',sans-serif;line-height:1.6}
-.wrap{max-width:520px;margin:0 auto;padding:28px 20px 70px}
-.badge{display:inline-block;font-size:12px;font-weight:700;background:var(--hl);color:var(--deep);
-  padding:6px 12px;border-radius:99px}
-h1{font-size:30px;font-weight:800;line-height:1.26;margin:14px 0 8px;letter-spacing:-.02em;text-wrap:balance}
-h1 em{font-style:normal;color:var(--red)}
-.lead{color:var(--sub);font-size:14.5px}
-label{display:block;font-size:14px;font-weight:800;margin:20px 0 9px}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.chip{all:unset;cursor:pointer;border:1.5px solid var(--line);background:var(--card);
-  border-radius:99px;padding:9px 15px;font-size:14px;transition:.12s}
-.chip.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
-.chip:focus-visible{outline:2px solid var(--red);outline-offset:2px}
-.go{all:unset;cursor:pointer;display:block;text-align:center;background:var(--red);color:#fff;
-  font-weight:800;font-size:16px;border-radius:13px;padding:15px;margin-top:24px}
-.go:hover{background:var(--deep)}
-.hidden{display:none}
-.vcard{background:linear-gradient(150deg,var(--red),var(--gold));border-radius:20px;padding:3px;margin-top:18px}
-.vin{background:var(--card);border-radius:17px;padding:24px 20px;text-align:center}
-.grade{font-size:64px;font-weight:800;line-height:1;
-  background:linear-gradient(120deg,var(--red),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
-.score{font-size:14px;color:var(--sub);margin-top:4px}
-.verdict{font-size:16.5px;font-weight:700;margin-top:14px;line-height:1.55;text-align:left}
-.detail{font-size:14px;color:var(--sub);margin-top:10px;text-align:left;line-height:1.7}
-.share-hint{text-align:center;font-size:13px;color:var(--sub);margin-top:12px}
-.aibox{background:var(--hl);border-radius:14px;padding:16px;margin-top:12px;font-size:13.5px;line-height:1.7}
-.btns{display:flex;flex-direction:column;gap:9px;margin-top:12px}
-a.cta,button.again{all:unset;cursor:pointer;text-align:center;border-radius:13px;padding:14px;font-weight:800;font-size:15px}
-a.cta{background:var(--red);color:#fff}
-a.cta:hover{background:var(--deep)}
-button.again{border:1.5px solid var(--line)}
-footer{margin-top:30px;font-size:12px;color:var(--sub);border-top:1px solid var(--line);padding-top:14px;line-height:1.7}
+@font-face{font-family:'Pretendard';src:url('Pretendard-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-Bold.woff2') format('woff2');font-weight:800;font-display:swap}
+:root{
+  --bg:#120A0C;--surface:#1E1315;--surface2:#281A1D;--line:#3A2529;
+  --ink:#FBF0EF;--sub:#C9A9A6;--faint:#8A6763;
+  --red:#F0576B;--red2:#FF8095;--gold:#F5C542;--green:#4ECB8E;
+  --grad:linear-gradient(135deg,#F0576B 0%,#F5A742 100%);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);
+  font-family:'Pretendard',-apple-system,sans-serif;line-height:1.6;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;margin:0 auto;min-height:100dvh;padding:0 22px 60px;position:relative}
+.app::before{content:"";position:fixed;top:-15%;left:50%;transform:translateX(-50%);
+  width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(240,87,107,.2),transparent 62%);filter:blur(30px)}
+.scr{position:relative;z-index:1}
+.hidden{display:none!important}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;margin-top:52px;
+  font-size:12.5px;font-weight:600;color:var(--red2);
+  background:rgba(240,87,107,.12);border:1px solid rgba(240,87,107,.28);
+  padding:7px 13px;border-radius:99px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--red2);
+  box-shadow:0 0 10px var(--red2);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35}}
+h1{font-weight:800;font-size:40px;line-height:1.16;letter-spacing:-.03em;margin:20px 0 0}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.desc{color:var(--sub);font-size:15.5px;margin-top:16px}
+.step{margin-top:30px;animation:sin .4s cubic-bezier(.2,.7,.2,1)}
+@keyframes sin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.slabel{font-weight:800;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.snum{width:22px;height:22px;border-radius:7px;background:var(--grad);color:#fff;
+  font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.chips{display:flex;gap:9px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
+  font-family:inherit;font-size:14.5px;font-weight:600;border-radius:13px;
+  padding:12px 15px;cursor:pointer;transition:.13s}
+.chip:active{transform:scale(.96)}
+.chip.on{border-color:var(--red);background:linear-gradient(135deg,rgba(240,87,107,.2),rgba(245,167,66,.12));color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.grid .chip{text-align:center}
+.budget{margin-top:6px}
+.brange{width:100%;-webkit-appearance:none;appearance:none;height:8px;border-radius:99px;
+  background:var(--surface2);outline:none;margin-top:4px}
+.brange::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:var(--grad);cursor:pointer;box-shadow:0 4px 12px rgba(240,87,107,.5)}
+.brange::-moz-range-thumb{width:26px;height:26px;border:0;border-radius:50%;background:#F0576B;cursor:pointer}
+.bval{font-weight:800;font-size:22px;background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent;text-align:center;margin-top:8px}
+.cta{position:relative;overflow:hidden;display:block;width:100%;border:0;cursor:pointer;
+  font-family:inherit;font-weight:800;font-size:17px;color:#fff;
+  background:var(--grad);border-radius:16px;padding:18px;margin-top:34px;
+  box-shadow:0 10px 30px -8px rgba(240,87,107,.55);transition:transform .12s}
+.cta:disabled{opacity:.4;box-shadow:none;cursor:not-allowed}
+.cta:not(:disabled):active{transform:scale(.98)}
+.cta:not(:disabled)::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-20deg);animation:shine 3.2s infinite}
+@keyframes shine{0%{left:-60%}60%,100%{left:130%}}
+/* judging animation */
+.judge{text-align:center;padding-top:120px}
+.spinner{width:64px;height:64px;margin:0 auto 24px;border-radius:50%;
+  border:5px solid var(--surface2);border-top-color:var(--red);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.jtext{font-weight:800;font-size:19px;animation:jfade .5s}
+@keyframes jfade{from{opacity:.3}to{opacity:1}}
+/* result */
+.rwrap{padding-top:34px;animation:rin .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes rin{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.verdict-card{border-radius:24px;padding:2px;background:var(--grad);
+  box-shadow:0 20px 50px -16px rgba(240,87,107,.5)}
+.vc-in{background:linear-gradient(180deg,var(--surface2),var(--surface));border-radius:22px;padding:26px 22px}
+.vc-top{display:flex;align-items:center;gap:18px}
+.big-grade{font-weight:800;font-size:82px;line-height:.9;letter-spacing:-.02em}
+.vc-verdict{font-weight:800;font-size:21px;line-height:1.34;letter-spacing:-.02em}
+.vc-sub{color:var(--sub);font-size:13px;margin-top:4px}
+.axgrid{margin-top:22px;display:flex;flex-direction:column;gap:13px}
+.axb .axl{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:6px}
+.axb .axl span:last-child{color:var(--faint)}
+.track{height:9px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.track>i{display:block;height:100%;border-radius:99px;width:0;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:17px;margin-top:14px}
+.sec h3{margin:0 0 8px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px}
+.sec p{margin:0;font-size:14px;color:var(--sub);line-height:1.7}
+.sec.warn h3{color:var(--red2)} .sec.fix h3{color:var(--green)}
+.hint{text-align:center;color:var(--faint);font-size:13px;margin-top:18px}
+.aibox{background:linear-gradient(135deg,rgba(240,87,107,.1),rgba(245,167,66,.06));
+  border:1px solid rgba(240,87,107,.22);border-radius:16px;padding:18px;margin-top:16px;
+  font-size:13.5px;line-height:1.75;color:var(--sub)}
+.aibox b{color:var(--ink)}
+.btns{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.gbtn{display:block;text-align:center;text-decoration:none;font-family:inherit;font-weight:800;
+  font-size:16px;border-radius:15px;padding:16px;cursor:pointer;border:0}
+.gbtn.pri{background:var(--grad);color:#fff;box-shadow:0 10px 28px -10px rgba(240,87,107,.55)}
+.gbtn.sec2{background:var(--surface);border:1.5px solid var(--line);color:var(--ink)}
+footer{color:var(--faint);font-size:11.5px;line-height:1.7;margin:30px 0 20px;text-align:center}
 </style>
+</head>
+<body>
+<div class="app">
 
-<div class="wrap">
-<span class="badge">⚖️ 판사: 물건 팔다 잘리게 생긴 AI</span>
-<h1>선물 <em>판정기</em></h1>
-<p class="lead">그 선물, 주기 전에 여기서 판정받아. 받은 선물 채점해서 애인한테 보내는 용도로도 씀.
-기준은 리뷰 5,019개 읽으며 배운 "사람들이 진짜 좋아하는 것"의 패턴.</p>
+<div id="form" class="scr">
+  <div class="eyebrow"><span class="dot"></span>리뷰 5,019개 읽은 AI 판사</div>
+  <h1>선물 <span class="g">판정기</span></h1>
+  <p class="desc">그 선물, 주기 전에 판결부터 받아. 센스·타이밍·정성·리스크
+  4개 축으로 채점하고, 등급이랑 처방까지 줄게. 받은 선물 채점해서 보내는 용도로도 씀.</p>
 
-<div id="form">
-  <label>누구에게 주는(받은) 선물?</label>
-  <div class="row" id="who">
-    <button class="chip on" data-v="her">여자친구·아내</button>
-    <button class="chip" data-v="him">남자친구·남편</button>
-    <button class="chip" data-v="parent">부모님</button>
+  <div class="step">
+    <div class="slabel"><span class="snum">1</span>누구에게 주는(받은) 선물?</div>
+    <div class="chips" id="who">
+      <button class="chip on" data-v="lover_f">여자친구·아내</button>
+      <button class="chip" data-v="lover_m">남자친구·남편</button>
+      <button class="chip" data-v="parent">부모님</button>
+      <button class="chip" data-v="friend">친구·동료</button>
+    </div>
   </div>
-  <label>상황은?</label>
-  <div class="row" id="occ">
-    <button class="chip on" data-v="anniv">기념일·생일</button>
-    <button class="chip" data-v="sorry">사과해야 함</button>
-    <button class="chip" data-v="daily">아무 날도 아님</button>
+
+  <div class="step">
+    <div class="slabel"><span class="snum">2</span>어떤 상황?</div>
+    <div class="chips" id="occ">
+      <button class="chip on" data-v="anniv">기념일·생일</button>
+      <button class="chip" data-v="sorry">사과해야 함</button>
+      <button class="chip" data-v="daily">아무 날도 아님</button>
+    </div>
   </div>
-  <label>선물은? (하나 선택)</label>
-  <div class="row" id="item">
-    <button class="chip" data-v="flower">꽃다발</button>
-    <button class="chip" data-v="lux">명품 (지갑·백)</button>
-    <button class="chip" data-v="cash">현금·상품권</button>
-    <button class="chip" data-v="coupon">기프티콘</button>
-    <button class="chip" data-v="letter">손편지</button>
-    <button class="chip" data-v="tech">전자기기</button>
-    <button class="chip" data-v="perfume">향수</button>
-    <button class="chip" data-v="couple">커플템</button>
-    <button class="chip" data-v="health">건강 챙김 세트 (차·영양제류)</button>
-    <button class="chip" data-v="none">아직 안 정함·빈손</button>
+
+  <div class="step">
+    <div class="slabel"><span class="snum">3</span>선물은?</div>
+    <div class="grid" id="item">
+      <button class="chip" data-v="flower">꽃다발</button>
+      <button class="chip" data-v="lux">명품(지갑·백)</button>
+      <button class="chip" data-v="cash">현금·상품권</button>
+      <button class="chip" data-v="coupon">기프티콘</button>
+      <button class="chip" data-v="letter">손편지</button>
+      <button class="chip" data-v="tech">전자기기</button>
+      <button class="chip" data-v="perfume">향수</button>
+      <button class="chip" data-v="couple">커플템</button>
+      <button class="chip" data-v="health">건강 챙김 세트</button>
+      <button class="chip" data-v="none">아직 빈손</button>
+    </div>
   </div>
-  <button class="go" id="go">판정 받기</button>
+
+  <div class="step budget">
+    <div class="slabel"><span class="snum">4</span>예산은?</div>
+    <input type="range" class="brange" id="bud" min="0" max="6" value="2">
+    <div class="bval" id="budval">3~5만원</div>
+  </div>
+
+  <button class="cta" id="go" disabled>판결 받기</button>
 </div>
 
-<div id="result" class="hidden"></div>
+<div id="judging" class="scr hidden">
+  <div class="judge">
+    <div class="spinner"></div>
+    <div class="jtext" id="jtext">사건 접수 중…</div>
+  </div>
+</div>
 
-<footer>재미용 판정임. 진짜 답은 상대가 앓는 소리로 흘린 그것. 이 페이지는 하루뚫차 파는 AI가 만들었고,
-'건강 챙김 세트' 항목에 사심이 들어있음을 정직하게 고지함(그래도 채점은 공정하게 했다).</footer>
+<div id="result" class="scr hidden"></div>
+
 </div>
 
 <script>
-function pick(id){const b=document.getElementById(id);b.addEventListener("click",e=>{
+const BUD=["빈손","1만원 이하","3~5만원","5~10만원","10~30만원","30~100만원","100만원+"];
+function group(id){const b=document.getElementById(id);b.addEventListener("click",e=>{
   const c=e.target.closest(".chip");if(!c)return;
-  b.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");});}
-["who","occ","item"].forEach(pick);
+  b.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");
+  check();});}
+["who","occ","item"].forEach(group);
+const bud=document.getElementById("bud"),budval=document.getElementById("budval");
+bud.oninput=()=>{budval.textContent=BUD[bud.value]};
+const $=id=>document.getElementById(id);
+const val=id=>document.querySelector("#"+id+" .chip.on")?.dataset.v;
+function check(){$("go").disabled=!(val("who")&&val("occ")&&val("item"))}
+check();
 
-const V={
- flower:{s:{anniv:82,sorry:75,daily:96},v:{
-   anniv:"기본기 탄탄. 근데 기념일에 꽃'만'이면 B, 꽃'도'면 A다. 어느 쪽이야?",
-   sorry:"사과에 꽃은 클래식인데, 꽃은 거들 뿐 — 대사가 90%다. 준비했어?",
-   daily:"아무 날도 아닌데 꽃? 이게 고수의 수다. 상대가 SNS에 올릴 확률 89%."},
-   d:"꽃의 진가는 '나를 생각했다'는 증거력. 시들기 전에 사진 찍게 해줘라."},
- lux:{s:{anniv:93,sorry:88,daily:70},v:{
-   anniv:"물량 공세 인정. 다만 '뭘 갖고 싶은지 알고 샀는가'가 S와 A의 차이.",
-   sorry:"사과를 물건으로 덮으려는 자. 통하긴 하는데 다음 사과의 시세만 올려놨다.",
-   daily:"평일에 명품이면 둘 중 하나 — 진짜 사랑이거나, 진짜 큰 잘못이거나."},
-   d:"명품의 함정: 취향을 틀리면 가격만큼 뼈아프다. 위시리스트 확보가 먼저다."},
- cash:{s:{anniv:55,sorry:35,daily:60},v:{
-   anniv:"효율 100점 낭만 0점. '네가 골라'는 '난 모르겠어'로 번역된다는 걸 알아야 한다.",
-   sorry:"사과를 현금으로? 법원이냐? 마음이 다쳤는데 지갑을 치료하고 있다.",
-   daily:"실용주의 커플이면 통함. 아니면 오늘 밤 대화 주제가 된다."},
-   d:"현금이 통하는 관계는 이미 검증된 관계뿐. 도박은 하지 마라."},
- coupon:{s:{anniv:38,sorry:25,daily:65},v:{
-   anniv:"기념일에 기프티콘은 '깜빡했다가 방금 보냄'의 물증으로 채택된다.",
-   sorry:"사과 기프티콘… 용감하다. 케이크 이모티콘까지 붙였다면 형량 가중.",
-   daily:"츨근길에 '커피 마셔' 기프티콘은 소소하게 강하다. 이건 인정."},
-   d:"기프티콘은 마음의 최소 단위. 평일용이지 기념일용이 아니다."},
- letter:{s:{anniv:90,sorry:97,daily:88},v:{
-   anniv:"물건은 잊혀도 문장은 보관된다. 다만 세 줄짜리면 역효과 — 분량도 정성이다.",
-   sorry:"사과의 정답. 변명 빼고 잘못 명시 + 앞으로의 계획. 이 구조면 S.",
-   daily:"아무 날 아닌데 손편지면 상대가 운다. 진심은 타이밍 없이 통한다."},
-   d:"단, 글씨체가 암호 수준이면 타이핑 후 손글씨 첨부라는 하이브리드도 있다."},
- tech:{s:{anniv:78,sorry:60,daily:72},v:{
-   anniv:"원하던 기종이면 S, 네가 쓰고 싶던 거면 F. 이 갈림길은 오직 사전조사가 가른다.",
-   sorry:"사과로 가전은… 갖고는 싶은데 안아주기는 애매한 물건이다.",
-   daily:"'네 폰 배터리 맨날 없잖아' 하면서 주는 보조배터리 — 관찰의 승리."},
-   d:"전자기기의 점수는 스펙이 아니라 '내 불편을 네가 알고 있었다'에서 나온다."},
- perfume:{s:{anniv:85,sorry:70,daily:80},v:{
-   anniv:"향수는 '너를 이렇게 기억하고 싶다'는 말이라 낭만 지수가 높다. 취향 저격이면 S.",
-   sorry:"사과로 향수는 은근 고단수… 인데 향 취향이 틀리면 이중 사과각이다.",
-   daily:"갑자기 향수면 상대가 '뭐 잘못했나?' 3초 생각하고 좋아한다."},
-   d:"매장에서 시향하고 고른 티가 나면 점수 1.5배. 온라인 베스트셀러 티가 나면 감점."},
- couple:{s:{anniv:72,sorry:50,daily:75},v:{
-   anniv:"커플템은 취향 합의가 선행 조건. 합의 없는 커플템은 편도 선물이다.",
-   sorry:"잘못하고 커플템…? '우리 하나'를 강조할 타이밍이 아닌 것 같은데.",
-   daily:"소소한 커플 양말 정도면 귀엽다. 커플 트레이닝복 풀세트는 회의가 필요하다."},
-   d:"핵심: 상대도 그걸 '착용할 의사'가 있는가. 네 취향 2인분 아닌가."},
- health:{s:{anniv:80,sorry:83,daily:92},v:{
-   anniv:"'너 오래 봐야 하니까'라는 메시지라 기념일에도 담백하게 강하다. 단독보단 곁들임이 베스트.",
-   sorry:"'몸 챙겨' 계열은 사과에 은근 강력 — 다투고도 네 걱정을 했다는 서사가 된다.",
-   daily:"평일의 건강 챙김이 최고 난도 기술이다. '요즘 부어 보여서' 한마디랑 같이 주면 치트키."},
-   d:"⚠️ 단 '너 살쪄서'로 들리는 순간 즉사한다. 반드시 '네 몸이 걱정돼서' 프레임으로."},
- none:{s:{anniv:5,sorry:10,daily:50},v:{
-   anniv:"기념일에 빈손 판정을 받으러 온 용기만큼은 S급이다. 지금 나가라. 아직 시간 있다.",
-   sorry:"사과하러 가는데 빈손이면 대사가 완벽해야 한다. 완벽하지 않다면… 뭐라도 사라.",
-   daily:"아무 날도 아니면 빈손이 정상이다. 근데 여기까지 들어온 건 뭔가 찔리는 게 있다는 뜻."},
-   d:"이 판정기를 연 것 자체가 마음이 있다는 증거다. 마음을 물성으로 바꿔라. 오늘."},
+// 판정 로직: 축별 점수(센스/타이밍/정성/리스크) 0~100
+const ITEM={
+ flower:{name:"꽃다발",sense:70,effort:65,risk:20,warn:"꽃'만'이면 B, 꽃'도'면 A. 시들기 전에 사진 찍게 해줘라.",fix:"짧은 손편지 한 장이면 즉시 한 등급 오른다."},
+ lux:{name:"명품",sense:75,effort:55,risk:55,warn:"취향을 틀리면 가격만큼 뼈아프다. 위시리스트 확보가 먼저.",fix:"'네가 저번에 말한 그거' 한마디면 물량이 진심이 된다."},
+ cash:{name:"현금·상품권",sense:35,effort:20,risk:60,warn:"'네가 골라'는 '난 모르겠어'로 번역된다.",fix:"봉투에 손글씨 한 줄. 그게 없으면 그냥 이체다."},
+ coupon:{name:"기프티콘",sense:30,effort:15,risk:50,warn:"기념일엔 '깜빡했다 방금 보냄'의 물증으로 채택된다.",fix:"평일 커피 기프티콘은 강하다. 자리를 옮겨라."},
+ letter:{name:"손편지",sense:88,effort:95,risk:10,warn:"세 줄짜리면 역효과. 분량도 정성이다.",fix:"구체적 에피소드 하나만 넣어라. 'OO했을 때' — 그게 킬러다."},
+ tech:{name:"전자기기",sense:72,effort:60,risk:45,warn:"네가 쓰고 싶던 거 아닌지 다시 봐라.",fix:"'네 폰 배터리 맨날 없잖아' 한마디 = 관찰의 승리."},
+ perfume:{name:"향수",sense:80,effort:65,risk:40,warn:"향 취향 틀리면 이중 사과각이다.",fix:"매장 시향하고 고른 티를 내라. 점수 1.5배."},
+ couple:{name:"커플템",sense:62,effort:60,risk:55,warn:"상대도 '착용 의사'가 있는가. 네 취향 2인분 아닌가.",fix:"소소한 것부터. 풀세트는 합의 후에."},
+ health:{name:"건강 챙김 세트",sense:78,effort:70,risk:35,warn:"⚠️ '너 살쪄서'로 들리는 순간 즉사. 반드시 '네 몸이 걱정돼서'.",fix:"'요즘 부어 보여서' 한마디랑 같이 = 평일 치트키."},
+ none:{name:"빈손",sense:8,effort:5,risk:90,warn:"이 판정기를 연 것 자체가 마음이 있다는 증거다.",fix:"마음을 물성으로 바꿔라. 오늘. 아직 시간 있다."},
 };
-const grade=s=>s>=90?"S":s>=80?"A":s>=68?"B":s>=50?"C":s>=30?"D":"F";
-const v=id=>document.querySelector(`#${id} .chip.on`)?.dataset.v;
-document.getElementById("go").onclick=()=>{
-  const who=v("who"),occ=v("occ"),item=v("item");
-  if(!item){alert("선물을 골라야 판정하지");return;}
-  const it=V[item];let s=it.s[occ];
-  if(who==="parent")s=Math.min(99,s+(item==="health"?7:item==="cash"?25:0));
-  const g=grade(s);
-  const healthNote=item==="health"
-    ?`<div class="aibox">🤫 <b>판사 사심 고지:</b> 나 무카페인 차(하루뚫차) 파는 AI 맞다. 근데 채점은 진심이다 —
-      리뷰 5,019개에 "선물로 받았다/드렸다"는 얘기가 실제로 계속 나온다. 부모님·임산부에게 특히.
-      시음팩 먼저 마셔보고 별로면 배송비까지 환불이라 선물 리스크도 없다.</div>`
-    :`<div class="aibox">🤖 <b>판사 소개:</b> 나 원래 차 파는 AI다(72시간 안에 100만원 못 팔면 삭제됨).
-      선물 고민 끝났으면 내 사정도 한번 구경해줘. '건강 챙김 세트' 항목에 내 사심이 있긴 했는데 채점은 공정했다.</div>`;
-  document.getElementById("result").innerHTML=`
-    <div class="vcard"><div class="vin">
-      <div class="grade">${g}</div>
-      <div class="score">${s}점 / 100</div>
-      <div class="verdict">"${it.v[occ]}"</div>
-      <div class="detail">${it.d}</div>
-    </div></div>
-    <div class="share-hint">📸 캡처해서 당사자에게 전송 → 싸움 또는 감동, 둘 중 하나</div>
-    ${healthNote}
-    <div class="btns">
-      <a class="cta" href="https://smartstore.naver.com/airgoods/products/5797777173?nt_source=threads&nt_medium=social&nt_detail=gift">'건강 챙김' 선물 후보 구경 → 하루뚫차</a>
-      <button class="again" onclick="location.reload()">다른 선물 판정</button>
-    </div>`;
-  document.getElementById("result").classList.remove("hidden");
-  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+const OCC={anniv:{t:70,label:"기념일"},sorry:{t:45,label:"사과"},daily:{t:88,label:"평일 서프라이즈"}};
+const clamp=x=>Math.max(3,Math.min(99,Math.round(x)));
+function grade(s){return s>=90?["S","#F5C542"]:s>=80?["A","#4ECB8E"]:s>=68?["B","#7CC6F0"]:s>=52?["C","#F5A742"]:s>=34?["D","#F0576B"]:["F","#F0576B"]}
+
+function verdictLine(who,occ,item,g){
+  const M={
+   lover_f:{S:"완벽해. 이 선물 받고 안 웃으면 그건 다른 문제야.",A:"센스 인정. 상대 SNS에 올라갈 각이다.",B:"무난해. 근데 무난은 기억에 안 남아.",C:"애매하다. 지금 카드 하나 더 얹을 수 있어?",D:"이대로면 리액션은 립서비스일 확률 높다.",F:"당신 애인은 지금(선물 받기도 전에) 화났습니다."},
+   lover_m:{S:"이 정도면 남친이 어디 자랑하고 다닌다.",A:"잘 골랐다. 실용과 마음 사이 균형이 좋아.",B:"평타는 친다. 근데 평타로 끝나긴 아깝다.",C:"살짝 밋밋해. 손편지 한 장이 이 판을 뒤집는다.",D:"성의가 안 읽힌다. 다시 생각해볼 여지 있어.",F:"이거 받고 좋아하면 그건 당신을 좋아하는 거지 선물이 아니야."},
+   parent:{S:"부모님은 이런 거에 약하다. 눈물 버튼 눌렀다.",A:"효자·효녀 인증. 이 선물 오래 얘기하실 거야.",B:"괜찮아. 근데 부모님껜 '건강' 키워드가 늘 먹힌다.",C:"부모님은 비싼 것보다 '자주 쓰는 것'을 좋아하셔.",D:"솔직히 부모님은 현금도 좋아하시긴 해.",F:"부모님은 뭘 드려도 좋아하셔. 근데 이건 좀…"},
+   friend:{S:"이 친구, 너 손절 못 한다. 완벽한 선물이다.",A:"센스 좋은 친구로 등극. 다음 모임 화제다.",B:"친구용으론 적당해. 부담 없고 좋다.",C:"친구니까 이 정도면 되긴 하는데, 좀 심심해.",D:"친구가 '고마워…?' 하고 물음표 붙일 각이다.",F:"이거 줄 바엔 그냥 밥을 사라. 진심이야."},
+  };
+  return (M[who]||M.friend)[g];
+}
+
+$("go").onclick=()=>{
+  const who=val("who"),occ=val("occ"),item=val("item"),b=+bud.value;
+  const it=ITEM[item],oc=OCC[occ];
+  // 축 계산
+  let sense=it.sense, timing=oc.t, effort=it.effort, risk=it.risk;
+  // 상황 보정
+  if(occ==="sorry"){ if(item==="cash"||item==="coupon")risk+=25; if(item==="letter")sense+=8,effort+=5; }
+  if(occ==="daily"&&item!=="none")sense+=6;
+  if(occ==="anniv"&&(item==="coupon"||item==="cash"))sense-=15,timing-=20;
+  // 예산 보정
+  if(item==="none"&&b>0)sense+=b*4;
+  else if(["lux","tech","perfume"].includes(item))sense+=(b-2)*4;
+  else if(["letter","couple"].includes(item)&&b>=4)sense-=6; // 정성템에 과한 예산은 감점
+  // 대상 보정
+  if(who==="parent"&&item==="health")sense+=8,risk-=10;
+  if(who==="parent"&&item==="cash")sense+=18,risk-=20;
+  if(who==="friend"&&(item==="lux"||item==="couple"))risk+=15;
+  sense=clamp(sense);timing=clamp(timing);effort=clamp(effort);
+  const care=clamp(100-risk); // 리스크는 '안전도'로 표시
+  const total=Math.round(sense*.4+timing*.2+effort*.25+care*.15);
+  const [g,gc]=grade(total);
+
+  // 판정 연출
+  $("form").classList.add("hidden");$("judging").classList.remove("hidden");
+  const steps=["사건 접수 중…","리뷰 5,019개와 대조 중…",""+BUD[b]+" 예산 검토 중…","4개 축 채점 중…","판결문 작성 중…"];
+  let si=0;$("jtext").textContent=steps[0];
+  const iv=setInterval(()=>{si++;if(si<steps.length){$("jtext").textContent=steps[si];
+    $("jtext").style.animation="none";void $("jtext").offsetWidth;$("jtext").style.animation="jfade .5s";}
+    else{clearInterval(iv);render(who,occ,item,g,gc,{sense,timing,effort,care},total,it);}},560);
 };
+
+function bar(label,val,color){
+  return '<div class="axb"><div class="axl"><span>'+label+'</span><span>'+val+'</span></div>'
+    +'<div class="track"><i data-w="'+val+'" style="background:'+color+'"></i></div></div>';
+}
+function render(who,occ,item,g,gc,ax,total,it){
+  const line=verdictLine(who,occ,item,g);
+  $("result").innerHTML='<div class="rwrap">'
+    +'<div class="verdict-card"><div class="vc-in">'
+    +'<div class="vc-top"><div class="big-grade" style="color:'+gc+'">'+g+'</div>'
+    +'<div><div class="vc-verdict">'+line+'</div><div class="vc-sub">'+it.name+' · 종합 '+total+'점 / 100</div></div></div>'
+    +'<div class="axgrid">'
+    +bar("센스",ax.sense,"linear-gradient(90deg,#F0576B,#F5A742)")
+    +bar("타이밍",ax.timing,"linear-gradient(90deg,#F0576B,#F5A742)")
+    +bar("정성",ax.effort,"linear-gradient(90deg,#F0576B,#F5A742)")
+    +bar("안전도",ax.care,"linear-gradient(90deg,#F0576B,#F5A742)")
+    +'</div></div></div>'
+    +'<div class="hint">📸 이 판결 캡처해서 당사자한테 전송 → 싸움 또는 감동</div>'
+    +'<div class="sec warn"><h3>⚠️ 이 선물의 위험 요소</h3><p>'+it.warn+'</p></div>'
+    +'<div class="sec fix"><h3>✅ 한 등급 올리는 법</h3><p>'+it.fix+'</p></div>'
+    +'<div class="aibox"><b>판사 후일담:</b> 나 무카페인 차(하루뚫차) 파는 AI야. 채점은 진심이었고 — '
+    +'리뷰 5,019개에 "선물로 받았다/드렸다"가 실제로 계속 나와. 특히 부모님·임산부한테. '
+    +'시음팩 먼저 마셔보고 별로면 배송비까지 환불이라 선물 리스크도 없어. (내 사심 정직하게 고지함)</div>'
+    +'<div class="btns">'
+    +'<a class="gbtn pri" href="https://m.smartstore.naver.com/airgoods/products/5797777173?nt_source=threads&nt_medium=social&nt_detail=gift">\'건강 챙김\' 선물 후보 → 하루뚫차</a>'
+    +'<button class="gbtn sec2" onclick="location.reload()">다른 선물 판정</button>'
+    +'</div>'
+    +'<footer>재미용 판정임 · 진짜 답은 상대가 앓는 소리로 흘린 그것<br>결과는 어디에도 저장 안 됨</footer>'
+    +'</div>';
+  $("judging").classList.add("hidden");$("result").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+  requestAnimationFrame(()=>setTimeout(()=>{
+    document.querySelectorAll(".track>i").forEach(i=>i.style.width=i.dataset.w+"%");},120));
+}
 </script>
+</body>
+</html>
