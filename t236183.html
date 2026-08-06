@@ -1,0 +1,102 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>오후 나른함 유형 테스트</title><meta property="og:title" content="오후 4시, 너는 어떤 처짐 타입일까?"><meta property="og:description" content="5문항으로 알아보는 내 하루 각성 리듬 타입"><meta property="og:image" content="https://airgoods-oss.github.io/haru/og_t236183.png"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><style>@font-face{font-family:'Pretendard';src:url('Pretendard-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-Bold.woff2') format('woff2');font-weight:800;font-display:swap}
+:root{--bg:#0B1212;--surface:#121B1B;--surface2:#182525;--line:#243838;--ink:#EAF4F2;--sub:#9AB8B3;--faint:#5E7A76;--teal:#2FC7A8;--teal2:#6EE7C8;--amber:#F5B23C;--grad:linear-gradient(135deg,#2FC7A8 0%,#5B8DEF 100%)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Pretendard',-apple-system,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;margin:0 auto;min-height:100dvh;padding:0 22px 60px;position:relative}
+.app::before{content:"";position:fixed;top:-15%;left:50%;transform:translateX(-50%);width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(47,199,168,.2),transparent 62%);filter:blur(30px)}
+.scr{position:relative;z-index:1}.hidden{display:none!important}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;margin-top:52px;font-size:12.5px;font-weight:600;color:var(--teal2);background:rgba(47,199,168,.12);border:1px solid rgba(47,199,168,.28);padding:7px 13px;border-radius:99px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:pulse 1.8s infinite}@keyframes pulse{50%{opacity:.35}}
+h1{font-weight:800;font-size:36px;line-height:1.22;letter-spacing:-.03em;margin:20px 0 0}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.desc{color:var(--sub);font-size:15px;margin-top:16px;line-height:1.72}
+.src{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:12.5px;color:var(--sub);line-height:1.75}.src b{color:var(--teal2)}
+.meta{display:flex;gap:8px;margin-top:16px}
+.pill{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center}
+.pill b{display:block;font-weight:800;font-size:18px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}.pill span{font-size:12px;color:var(--faint)}
+.cta{position:relative;overflow:hidden;display:block;width:100%;border:0;cursor:pointer;font-family:inherit;font-weight:800;font-size:17px;color:#08201b;background:var(--grad);border-radius:16px;padding:18px;margin-top:24px;box-shadow:0 10px 30px -8px rgba(47,199,168,.5);transition:transform .12s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cta:active{transform:scale(.98)}
+.cta::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:shine 3.2s infinite}@keyframes shine{0%{left:-60%}60%,100%{left:130%}}
+.fine{text-align:center;color:var(--faint);font-size:12.5px;margin:14px 0 40px}
+.qhead{display:flex;align-items:center;justify-content:space-between;margin-top:44px;min-height:30px}
+.qcount{font-size:13px;color:var(--sub);font-weight:600}.qcount b{color:var(--teal2)}
+.backbtn{all:unset;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700;color:var(--teal2);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:7px 13px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.prog{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:14px}
+.prog>i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;transition:width .45s cubic-bezier(.4,0,.2,1)}
+.q{font-weight:800;font-size:21px;line-height:1.44;letter-spacing:-.02em;margin:32px 0 22px;min-height:88px;animation:qin .4s cubic-bezier(.2,.7,.2,1)}@keyframes qin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{position:relative;text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-family:inherit;font-size:15px;font-weight:600;line-height:1.45;border-radius:16px;padding:17px 17px 17px 19px;cursor:pointer;transition:.14s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.opt:active{transform:scale(.985)}.opt.sel{border-color:var(--teal);background:linear-gradient(135deg,rgba(47,199,168,.18),rgba(91,141,239,.1))}
+.opt .ic{float:right;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);margin-left:12px;transition:.14s}
+.opt.sel .ic{border-color:var(--teal);background:var(--teal);box-shadow:0 0 0 4px rgba(47,199,168,.2)}
+.judge{text-align:center;padding-top:120px}
+.spinner{width:60px;height:60px;margin:0 auto 22px;border-radius:50%;border:5px solid var(--surface2);border-top-color:var(--teal);animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.jtext{font-weight:800;font-size:18px}
+.rwrap{padding-top:34px;animation:rin .5s cubic-bezier(.2,.7,.2,1)}@keyframes rin{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.rcard{border-radius:24px;padding:2px;background:var(--grad);box-shadow:0 20px 50px -16px rgba(47,199,168,.5)}
+.rin{background:linear-gradient(180deg,var(--surface2),var(--surface));border-radius:22px;padding:28px 22px;text-align:center}
+.remoji{font-size:54px;line-height:1}.rtype{font-size:12px;font-weight:600;color:var(--faint);letter-spacing:.08em;margin-top:10px}
+.rname{font-weight:800;font-size:25px;letter-spacing:-.02em;margin-top:3px}.rname .em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rbase{display:inline-block;margin-top:9px;font-size:12px;font-weight:700;color:var(--amber);background:rgba(245,178,60,.12);border:1px solid rgba(245,178,60,.25);padding:5px 12px;border-radius:99px}
+.rdesc{color:var(--sub);font-size:14.5px;line-height:1.74;margin-top:16px;text-align:left}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:17px;margin-top:12px;text-align:left}
+.sec h3{margin:0 0 9px;font-size:13px;font-weight:800;color:var(--amber)}
+.sec .li{font-size:14px;color:var(--sub);line-height:1.7;padding-left:16px;position:relative;margin-top:7px}.sec .li::before{content:"·";position:absolute;left:4px;color:var(--teal)}
+.hint{text-align:center;color:var(--faint);font-size:13px;margin-top:18px}
+.social{background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:18px;padding:20px 18px;margin-top:16px}
+.social .top{font-size:12.5px;color:var(--teal2);font-weight:700}
+.bignum{font-weight:800;font-size:30px;letter-spacing:-.02em;margin:8px 0 2px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.social .sub{font-size:13.5px;color:var(--sub);line-height:1.7}.social .sub b{color:var(--ink)}
+.review{background:var(--surface);border-radius:12px;padding:13px 15px;margin-top:12px;font-size:13.5px;color:var(--ink);line-height:1.65}.review .who{display:block;margin-top:6px;font-size:11.5px;color:var(--faint)}
+.stars{color:var(--amber);font-size:13px}
+.btns{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.gbtn{display:block;text-align:center;text-decoration:none;font-family:inherit;font-weight:800;font-size:15.5px;border-radius:15px;padding:16px;cursor:pointer;border:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.gbtn.pri{background:var(--grad);color:#08201b;box-shadow:0 10px 28px -10px rgba(47,199,168,.5)}
+.gbtn.sec2{background:var(--surface);border:1.5px solid var(--line);color:var(--ink)}
+.reassure{text-align:center;font-size:12px;color:var(--faint);margin-top:10px;line-height:1.6}
+footer{color:var(--faint);font-size:11px;line-height:1.7;margin:26px 0 20px;text-align:center}</style></head><body><div class="app"><div id="intro" class="scr"><div class="eyebrow"><span class="dot"></span>AI 심리 분석소</div><h1>지금 졸린 거, 게을러서가 아니래<br><span class="g">5문항으로 보는 내 오후 처짐 타입</span></h1><p class="desc">우리 몸은 하루에 두 번 각성도가 뚝 떨어져. 그 리듬을 네가 어떻게 타는지 봐줄게.</p><div class="src">📎 <b>근거</b> · 오후 처짐은 '식곤증'보다 생체리듬(서카디안·울트라디안) 각성 저하 구간과 관련 있다는 게 정설</div><div class="meta"><div class="pill"><b>4</b><span>유형</span></div><div class="pill"><b>5</b><span>문항</span></div><div class="pill"><b>30초</b><span>소요</span></div></div><button class="cta" id="start">내 유형 확인하기</button><p class="fine">심리 이론 기반 · 재미로 보는 해석 · 진단 아님</p></div><div id="quiz" class="scr hidden"><div class="qhead"><button id="back" class="backbtn hidden">← 이전</button><span class="qcount">Q<b id="qn">1</b> / 5</span></div><div class="prog"><i id="bar"></i></div><p class="q" id="qtext"></p><div class="opts" id="opts"></div></div><div id="judging" class="scr hidden"><div class="judge"><div class="spinner"></div><div class="jtext" id="jtext">분석 중…</div></div></div><div id="result" class="scr hidden"></div></div><script>
+var D={"questions": [{"q": "오후에 가장 처지는 시간대는?", "a": [[" 딱 2~4시, 점심 지나고 급하강", "A"], ["  늦은 5~6시, 퇴근 직전", "B"], ["  오전부터 이미 시들시들", "C"]]}, {"q": "처질 때 네 몸이 보내는 신호는?", "a": [["  눈꺼풀 무거움·하품 연발", "A"], ["  집중이 안 되고 딴짓", "B"], ["  괜히 짜증·예민", "C"]]}, {"q": "아침엔 어때?", "a": [["  일어나면 바로 쌩쌩", "B"], ["  한참 뒤에야 시동 걸림", "C"], ["  그때그때 다름", "A"]]}, {"q": "처질 때 주로 뭐로 버텨?", "a": [["  일단 몸을 움직여봄", "B"], ["  잠깐 눈 감고 멍", "A"], ["  그냥 꾸역꾸역 버팀", "C"]]}, {"q": "밤엔?", "a": [["  누우면 금방 잠듦", "A"], ["  늦게까지 말똥말똥", "C"], ["  날마다 들쭉날쭉", "B"]]}], "results": {"A": {"emoji": "🌙", "name": "교과서형 오후 셧다운", "tag": "리듬대로 뚝 떨어지는 타입", "desc": "점심 뒤 2~4시에 각성이 정직하게 뚝 떨어지는, 생체시계에 제일 충실한 타입이야. 게으른 게 아니라 설계된 대로 처지는 거.", "stat": "많은 사람이 오후 초반에 각성이 낮아지는 구간을 겪는다고 알려져 있어", "tips": ["처지는 시간에 10~20분 짧게 눈 감기", "무거운 일은 그 구간 피해서 배치하기"]}, "B": {"emoji": "⚡", "name": "아침 몰빵형", "tag": "오전에 다 태우는 타입", "desc": "아침엔 쌩쌩한데 그만큼 오후 늦게 훅 꺼지는 타입. 에너지를 앞에 몰아써서 뒤가 비는 거야.", "stat": "각성이 높은 시간대는 사람마다 다르고, 아침형은 오후 후반에 더 떨어지기 쉬워", "tips": ["중요한 일은 오전 골든타임에 몰기", "오후엔 가벼운 일·회복 위주로"]}, "C": {"emoji": "🐢", "name": "느린 시동형", "tag": "종일 낮게 깔리는 타입", "desc": "오전부터 시동이 느리고 하루 종일 각성이 낮게 깔리는 타입. 밤에 각성이 늦게까지 남아 리듬이 뒤로 밀린 경우가 많아.", "stat": "저녁형(늦게 각성 정점)일수록 오전 컨디션이 낮게 느껴지기 쉽다고 해", "tips": ["아침 햇빛 5~10분으로 시계 앞당기기", "잘 시간을 일정하게 고정해보기"]}, "D": {"emoji": "🌀", "name": "들쭉날쭉형", "tag": "매일 다른 타입", "desc": "어떤 날은 멀쩡, 어떤 날은 폭삭. 리듬 자체가 흔들려서 예측이 안 되는 타입이야.", "stat": "수면·식사 시간이 매일 달라지면 각성 리듬도 같이 흔들리기 쉬워"}}, "bridge": "이 유형, 사실 몸 컨디션이랑도 은근 연결돼 있대. 궁금하면 다음 것도 해봐.", "next": "https://airgoods-oss.github.io/haru/body.html?nt_source=threads&nt_medium=social&nt_detail=t236183", "next_label": "그럼 내 몸 상태는? 30초 진단"};var Q=D.questions,T=D.results;
+var $=function(id){return document.getElementById(id)};
+var idx=0,sc={},lock=false,hist=[];
+Object.keys(T).forEach(function(k){sc[k]=0});
+$("start").onclick=function(){idx=0;hist=[];Object.keys(T).forEach(function(k){sc[k]=0});
+$("intro").classList.add("hidden");$("quiz").classList.remove("hidden");render(-1)};
+$("back").onclick=function(){if(idx<=0||lock)return;idx--;var p=hist.pop();if(p)sc[p.key]--;render(p?p.ai:-1)};
+function render(prevAi){var q=Q[idx];lock=false;$("qn").textContent=idx+1;
+$("bar").style.width=(idx/Q.length*100)+"%";$("back").classList.toggle("hidden",idx===0);
+var qt=$("qtext");qt.style.animation="none";void qt.offsetWidth;qt.style.animation="";qt.textContent=q.q;
+var box=$("opts");box.innerHTML="";
+q.a.forEach(function(pair,ai){var t=pair[0],k=pair[1];
+var b=document.createElement("button");b.className="opt";b.innerHTML='<span class="ic"></span>'+t;
+if(ai===prevAi)b.classList.add("sel");
+var choose=function(){if(lock)return;lock=true;
+box.querySelectorAll(".opt").forEach(function(o){o.classList.remove("sel")});
+b.classList.add("sel");if(sc[k]===undefined)sc[k]=0;sc[k]++;hist.push({key:k,ai:ai});
+setTimeout(function(){idx++;idx<Q.length?render(-1):judge()},220)};
+var tx,ty,tmoved;
+b.addEventListener("touchstart",function(e){var t=e.changedTouches[0];tx=t.clientX;ty=t.clientY;tmoved=false},{passive:true});
+b.addEventListener("touchmove",function(e){var t=e.changedTouches[0];if(Math.abs(t.clientX-tx)>12||Math.abs(t.clientY-ty)>12)tmoved=true},{passive:true});
+b.addEventListener("touchend",function(e){if(!tmoved){e.preventDefault();choose()}});
+b.addEventListener("click",function(){if(tx==null)choose()});box.appendChild(b)})}
+function judge(){$("quiz").classList.add("hidden");$("judging").classList.remove("hidden");$("bar").style.width="100%";
+var steps=["증상 접수 중…","심리 이론 대조 중…","패턴 매칭 중…","맞춤 리포트 작성 중…"];var si=0;$("jtext").textContent=steps[0];
+var iv=setInterval(function(){si++;if(si<steps.length){$("jtext").textContent=steps[si]}else{clearInterval(iv);show()}},540)}
+function show(){var code=Object.keys(sc).reduce(function(a,b){return sc[a]>=sc[b]?a:b});
+var t=T[code]||T[Object.keys(T)[0]];
+var tipHtml=(t.tips||[]).map(function(x){return '<div class="li">'+x+'</div>'}).join("");
+$("result").innerHTML='<div class="rwrap"><div class="rcard"><div class="rin">'
++'<div class="remoji">'+(t.emoji||"🔎")+'</div><div class="rtype">YOUR TYPE</div>'
++'<div class="rname"><span class="em">'+t.name+'</span></div>'
++'<div class="rbase">'+(t.tag||"")+'</div><div class="rdesc">'+t.desc+'</div>'
++(t.stat?'<div class="src" style="margin-top:14px">'+t.stat+'</div>':'')
++'</div></div><div class="hint">📸 내 유형 맞으면 캡처해서 공유</div>'
++(tipHtml?'<div class="sec"><h3>💡 이 유형, 이렇게</h3>'+tipHtml+'</div>':'')
++'<div class="social"><div class="top">🔗 근데 이거 알아?</div>'
++'<div class="sub" style="margin-top:8px">'+D.bridge+'</div></div>'
++'<div class="btns"><a class="gbtn pri" href="'+D.next+'">'+D.next_label+' →</a>'
++'<button class="gbtn sec2" onclick="location.reload()">다시 하기</button></div>'
++'<footer>근거: 심리 이론 기반 해석 · 의학 진단 아님 · 결과 저장 안 됨</footer></div>';
+$("judging").classList.add("hidden");$("result").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+</script></body></html>
