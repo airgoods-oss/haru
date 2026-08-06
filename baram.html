@@ -1,0 +1,102 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>남편 바람지수 테스트</title><meta property="og:title" content="우리 남편 바람지수, 지금 몇 %일까"><meta property="og:description" content="행동 6가지로 보는 남편 바람지수. 심리학이 말하는 진짜 신호는 따로 있다."><meta property="og:image" content="https://airgoods-oss.github.io/haru/og_baram.png"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><style>@font-face{font-family:'Pretendard';src:url('Pretendard-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-Bold.woff2') format('woff2');font-weight:800;font-display:swap}
+:root{--bg:#0B1212;--surface:#121B1B;--surface2:#182525;--line:#243838;--ink:#EAF4F2;--sub:#9AB8B3;--faint:#5E7A76;--teal:#2FC7A8;--teal2:#6EE7C8;--amber:#F5B23C;--grad:linear-gradient(135deg,#2FC7A8 0%,#5B8DEF 100%)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Pretendard',-apple-system,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;margin:0 auto;min-height:100dvh;padding:0 22px 60px;position:relative}
+.app::before{content:"";position:fixed;top:-15%;left:50%;transform:translateX(-50%);width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(47,199,168,.2),transparent 62%);filter:blur(30px)}
+.scr{position:relative;z-index:1}.hidden{display:none!important}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;margin-top:52px;font-size:12.5px;font-weight:600;color:var(--teal2);background:rgba(47,199,168,.12);border:1px solid rgba(47,199,168,.28);padding:7px 13px;border-radius:99px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:pulse 1.8s infinite}@keyframes pulse{50%{opacity:.35}}
+h1{font-weight:800;font-size:36px;line-height:1.22;letter-spacing:-.03em;margin:20px 0 0}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.desc{color:var(--sub);font-size:15px;margin-top:16px;line-height:1.72}
+.src{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:12.5px;color:var(--sub);line-height:1.75}.src b{color:var(--teal2)}
+.meta{display:flex;gap:8px;margin-top:16px}
+.pill{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center}
+.pill b{display:block;font-weight:800;font-size:18px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}.pill span{font-size:12px;color:var(--faint)}
+.cta{position:relative;overflow:hidden;display:block;width:100%;border:0;cursor:pointer;font-family:inherit;font-weight:800;font-size:17px;color:#08201b;background:var(--grad);border-radius:16px;padding:18px;margin-top:24px;box-shadow:0 10px 30px -8px rgba(47,199,168,.5);transition:transform .12s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cta:active{transform:scale(.98)}
+.cta::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:shine 3.2s infinite}@keyframes shine{0%{left:-60%}60%,100%{left:130%}}
+.fine{text-align:center;color:var(--faint);font-size:12.5px;margin:14px 0 40px}
+.qhead{display:flex;align-items:center;justify-content:space-between;margin-top:44px;min-height:30px}
+.qcount{font-size:13px;color:var(--sub);font-weight:600}.qcount b{color:var(--teal2)}
+.backbtn{all:unset;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700;color:var(--teal2);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:7px 13px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.prog{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:14px}
+.prog>i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;transition:width .45s cubic-bezier(.4,0,.2,1)}
+.q{font-weight:800;font-size:21px;line-height:1.44;letter-spacing:-.02em;margin:32px 0 22px;min-height:88px;animation:qin .4s cubic-bezier(.2,.7,.2,1)}@keyframes qin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{position:relative;text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-family:inherit;font-size:15px;font-weight:600;line-height:1.45;border-radius:16px;padding:17px 17px 17px 19px;cursor:pointer;transition:.14s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.opt:active{transform:scale(.985)}.opt.sel{border-color:var(--teal);background:linear-gradient(135deg,rgba(47,199,168,.18),rgba(91,141,239,.1))}
+.opt .ic{float:right;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);margin-left:12px;transition:.14s}
+.opt.sel .ic{border-color:var(--teal);background:var(--teal);box-shadow:0 0 0 4px rgba(47,199,168,.2)}
+.judge{text-align:center;padding-top:120px}
+.spinner{width:60px;height:60px;margin:0 auto 22px;border-radius:50%;border:5px solid var(--surface2);border-top-color:var(--teal);animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.jtext{font-weight:800;font-size:18px}
+.rwrap{padding-top:34px;animation:rin .5s cubic-bezier(.2,.7,.2,1)}@keyframes rin{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.rcard{border-radius:24px;padding:2px;background:var(--grad);box-shadow:0 20px 50px -16px rgba(47,199,168,.5)}
+.rin{background:linear-gradient(180deg,var(--surface2),var(--surface));border-radius:22px;padding:28px 22px;text-align:center}
+.remoji{font-size:54px;line-height:1}.rtype{font-size:12px;font-weight:600;color:var(--faint);letter-spacing:.08em;margin-top:10px}
+.rname{font-weight:800;font-size:25px;letter-spacing:-.02em;margin-top:3px}.rname .em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rbase{display:inline-block;margin-top:9px;font-size:12px;font-weight:700;color:var(--amber);background:rgba(245,178,60,.12);border:1px solid rgba(245,178,60,.25);padding:5px 12px;border-radius:99px}
+.rdesc{color:var(--sub);font-size:14.5px;line-height:1.74;margin-top:16px;text-align:left}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:17px;margin-top:12px;text-align:left}
+.sec h3{margin:0 0 9px;font-size:13px;font-weight:800;color:var(--amber)}
+.sec .li{font-size:14px;color:var(--sub);line-height:1.7;padding-left:16px;position:relative;margin-top:7px}.sec .li::before{content:"·";position:absolute;left:4px;color:var(--teal)}
+.hint{text-align:center;color:var(--faint);font-size:13px;margin-top:18px}
+.social{background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:18px;padding:20px 18px;margin-top:16px}
+.social .top{font-size:12.5px;color:var(--teal2);font-weight:700}
+.bignum{font-weight:800;font-size:30px;letter-spacing:-.02em;margin:8px 0 2px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.social .sub{font-size:13.5px;color:var(--sub);line-height:1.7}.social .sub b{color:var(--ink)}
+.review{background:var(--surface);border-radius:12px;padding:13px 15px;margin-top:12px;font-size:13.5px;color:var(--ink);line-height:1.65}.review .who{display:block;margin-top:6px;font-size:11.5px;color:var(--faint)}
+.stars{color:var(--amber);font-size:13px}
+.btns{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.gbtn{display:block;text-align:center;text-decoration:none;font-family:inherit;font-weight:800;font-size:15.5px;border-radius:15px;padding:16px;cursor:pointer;border:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.gbtn.pri{background:var(--grad);color:#08201b;box-shadow:0 10px 28px -10px rgba(47,199,168,.5)}
+.gbtn.sec2{background:var(--surface);border:1.5px solid var(--line);color:var(--ink)}
+.reassure{text-align:center;font-size:12px;color:var(--faint);margin-top:10px;line-height:1.6}
+footer{color:var(--faint);font-size:11px;line-height:1.7;margin:26px 0 20px;text-align:center}</style></head><body><div class="app"><div id="intro" class="scr"><div class="eyebrow"><span class="dot"></span>AI 심리 분석소</div><h1>우리 남편<br><span class="g">바람지수 몇 %?</span></h1><p class="desc">흥신소는 돈 아까워. 사람은 거짓말해도 습관은 거짓말을 안 하거든. 행동심리로 보는 6가지 신호로, 지금 우리 남편 바람지수를 재보자.</p><div class="src">📎 <b>근거</b> · 행동심리학의 '변화 감지' 원리 · 죄책감/투사/회피 패턴 기반 해석</div><div class="meta"><div class="pill"><b>4</b><span>유형</span></div><div class="pill"><b>6</b><span>문항</span></div><div class="pill"><b>30초</b><span>소요</span></div></div><button class="cta" id="start">내 유형 확인하기</button><p class="fine">심리 이론 기반 · 재미로 보는 해석 · 진단 아님</p></div><div id="quiz" class="scr hidden"><div class="qhead"><button id="back" class="backbtn hidden">← 이전</button><span class="qcount">Q<b id="qn">1</b> / 6</span></div><div class="prog"><i id="bar"></i></div><p class="q" id="qtext"></p><div class="opts" id="opts"></div></div><div id="judging" class="scr hidden"><div class="judge"><div class="spinner"></div><div class="jtext" id="jtext">분석 중…</div></div></div><div id="result" class="scr hidden"></div></div><script>
+var D={"questions": [{"q": "요즘 남편 핸드폰, 어떻게 둬?", "a": [["아무 데나 두고 다녀. 잠금도 안 걸림", "A"], ["딱히 신경 안 쓰는 듯", "B"], ["언제부턴가 꼭 뒤집어 놓더라", "C"], ["화장실까지 들고 가고, 잠금을 바꿨어", "D"]]}, {"q": "야근·바깥 약속 빈도는?", "a": [["예전이랑 똑같아", "A"], ["가끔 좀 늘었나?", "B"], ["부쩍 늘었는데 설명이 두루뭉술해", "C"], ["급증했고, 물어보면 예민하게 굴어", "D"]]}, {"q": "요즘 나한테 대하는 태도는?", "a": [["평소랑 다를 거 없어", "A"], ["조금 무심해진 느낌", "B"], ["갑자기 잘해주거나 선물을 해", "C"], ["별것도 아닌 걸로 트집·짜증이 늘었어", "D"]]}, {"q": "외모나 향에 변화 있어?", "a": [["전혀 없어", "A"], ["다이어트 좀 하나 봐", "B"], ["갑자기 옷·향수에 신경 써", "C"], ["속옷·헬스·향수까지 싹 바뀌었어", "D"]]}, {"q": "부부 잠자리·스킨십은?", "a": [["평소랑 비슷해", "A"], ["좀 줄긴 했어", "B"], ["확 줄었거나 은근히 피해", "C"], ["거의 없고 스킨십을 거부해", "D"]]}, {"q": "'너 혹시 뭐 있어?' 하고 물으면?", "a": [["웃으면서 아니라고 해", "A"], ["별 반응 없어", "B"], ["발끈하거나 얼른 화제를 돌려", "C"], ["오히려 날 의심병 환자 취급해", "D"]]}], "results": {"A": {"emoji": "🟢", "name": "청정단계", "tag": "바람지수 5%", "desc": "지금은 이렇다 할 신호가 없어. 근데 이 테스트를 눌러본 것 자체가 '불안'하다는 뜻일 수 있어. 그 불안, 남편 때문이 아니라 요즘 내 몸·마음이 지쳐서일 때가 많더라.", "stat": "관계 불안은 실제 위협보다 '내 컨디션 저하'에서 오는 경우가 더 흔하다고 해", "tips": ["의심이 스멀거리면, 남편을 캐기 전에 내 수면·피로부터 점검해보기", "불안이 반복되면 혼자 삭이지 말고 감정을 글로 적어 객관화하기"]}, "B": {"emoji": "🟡", "name": "주의단계", "tag": "바람지수 30%", "desc": "결정적 신호보단 '권태'의 초입에 가까워. 바람이라기보다 서로에게 무뎌진 시기. 이때 방치하면 틈이 벌어지고, 살피면 다시 붙어. 지금이 갈림길이야.", "stat": "권태기의 무심함은 배신이 아니라 '거리 신호' — 대화 빈도로 회복되는 구간이라고 해", "tips": ["추궁 대신 '요즘 우리 좀 멀어진 것 같아' 한 문장으로 대화 열기", "둘만의 루틴(산책·차 한 잔) 하나 되살리기 — 붙는 시간이 답"]}, "C": {"emoji": "🟠", "name": "경고단계", "tag": "바람지수 65%", "desc": "신호가 여러 개 겹쳤어. 특히 '갑자기 잘해줌(죄책감)'과 '트집(투사)'이 같이 오면 마음이 딴 데 가 있을 때 나오는 전형적 패턴이야. 다만 심증은 물증이 아니야. 몰아세우면 더 숨어.", "stat": "죄책감 보상·사소한 시비는 심리학에서 '전치(displacement)'로 설명되는 대표 신호", "tips": ["감정으로 터뜨리지 말고, 사실(시간·패턴)만 담담히 기록해두기", "'요즘 무슨 일 있어? 나는 네 편이야' 안전한 문을 먼저 열어주기"]}, "D": {"emoji": "🔴", "name": "위험단계", "tag": "바람지수 85%", "desc": "행동·태도·회피가 한꺼번에 바뀐 고위험 패턴이야. 특히 '날 의심병 취급(가스라이팅)'까지 온다면 네 직감을 믿어. 그래도 감정적 폭발은 최악의 수 — 준비 없이 터뜨리면 증거만 사라져.", "stat": "직감의 정확도는 낮지 않지만, 확인은 '감정'이 아니라 '기록과 시간'이 하는 것", "tips": ["오늘 몰아세우지 말기. 감정 격발은 상대에게 방어할 시간을 줄 뿐", "혼자 앓지 말고 믿을 사람에게 털어놓기 — 판단이 흐려질수록 제3의 눈이 필요해"]}}, "bridge": "근데 이 의심에 시달리는 동안, 네 몸이 먼저 망가지고 있어. 스트레스는 제일 먼저 몸으로 오거든.", "next": "https://airgoods-oss.github.io/haru/body.html?nt_source=threads&nt_medium=social&nt_detail=baram", "next_label": "내 몸은 지금 괜찮나? 30초 체크"};var Q=D.questions,T=D.results;
+var $=function(id){return document.getElementById(id)};
+var idx=0,sc={},lock=false,hist=[];
+Object.keys(T).forEach(function(k){sc[k]=0});
+$("start").onclick=function(){idx=0;hist=[];Object.keys(T).forEach(function(k){sc[k]=0});
+$("intro").classList.add("hidden");$("quiz").classList.remove("hidden");render(-1)};
+$("back").onclick=function(){if(idx<=0||lock)return;idx--;var p=hist.pop();if(p)sc[p.key]--;render(p?p.ai:-1)};
+function render(prevAi){var q=Q[idx];lock=false;$("qn").textContent=idx+1;
+$("bar").style.width=(idx/Q.length*100)+"%";$("back").classList.toggle("hidden",idx===0);
+var qt=$("qtext");qt.style.animation="none";void qt.offsetWidth;qt.style.animation="";qt.textContent=q.q;
+var box=$("opts");box.innerHTML="";
+q.a.forEach(function(pair,ai){var t=pair[0],k=pair[1];
+var b=document.createElement("button");b.className="opt";b.innerHTML='<span class="ic"></span>'+t;
+if(ai===prevAi)b.classList.add("sel");
+var choose=function(){if(lock)return;lock=true;
+box.querySelectorAll(".opt").forEach(function(o){o.classList.remove("sel")});
+b.classList.add("sel");if(sc[k]===undefined)sc[k]=0;sc[k]++;hist.push({key:k,ai:ai});
+setTimeout(function(){idx++;idx<Q.length?render(-1):judge()},220)};
+var tx,ty,tmoved;
+b.addEventListener("touchstart",function(e){var t=e.changedTouches[0];tx=t.clientX;ty=t.clientY;tmoved=false},{passive:true});
+b.addEventListener("touchmove",function(e){var t=e.changedTouches[0];if(Math.abs(t.clientX-tx)>12||Math.abs(t.clientY-ty)>12)tmoved=true},{passive:true});
+b.addEventListener("touchend",function(e){if(!tmoved){e.preventDefault();choose()}});
+b.addEventListener("click",function(){if(tx==null)choose()});box.appendChild(b)})}
+function judge(){$("quiz").classList.add("hidden");$("judging").classList.remove("hidden");$("bar").style.width="100%";
+var steps=["증상 접수 중…","심리 이론 대조 중…","패턴 매칭 중…","맞춤 리포트 작성 중…"];var si=0;$("jtext").textContent=steps[0];
+var iv=setInterval(function(){si++;if(si<steps.length){$("jtext").textContent=steps[si]}else{clearInterval(iv);show()}},540)}
+function show(){var code=Object.keys(sc).reduce(function(a,b){return sc[a]>=sc[b]?a:b});
+var t=T[code]||T[Object.keys(T)[0]];
+var tipHtml=(t.tips||[]).map(function(x){return '<div class="li">'+x+'</div>'}).join("");
+$("result").innerHTML='<div class="rwrap"><div class="rcard"><div class="rin">'
++'<div class="remoji">'+(t.emoji||"🔎")+'</div><div class="rtype">YOUR TYPE</div>'
++'<div class="rname"><span class="em">'+t.name+'</span></div>'
++'<div class="rbase">'+(t.tag||"")+'</div><div class="rdesc">'+t.desc+'</div>'
++(t.stat?'<div class="src" style="margin-top:14px">'+t.stat+'</div>':'')
++'</div></div><div class="hint">📸 내 유형 맞으면 캡처해서 공유</div>'
++(tipHtml?'<div class="sec"><h3>💡 이 유형, 이렇게</h3>'+tipHtml+'</div>':'')
++'<div class="social"><div class="top">🔗 근데 이거 알아?</div>'
++'<div class="sub" style="margin-top:8px">'+D.bridge+'</div></div>'
++'<div class="btns"><a class="gbtn pri" href="'+D.next+'">'+D.next_label+' →</a>'
++'<button class="gbtn sec2" onclick="location.reload()">다시 하기</button></div>'
++'<footer>근거: 심리 이론 기반 해석 · 의학 진단 아님 · 결과 저장 안 됨</footer></div>';
+$("judging").classList.add("hidden");$("result").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+</script></body></html>
