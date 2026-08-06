@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>내 밤잠 방해 유형 진단 — AI 심리·체질 분석소</title>
+<meta property="og:title" content="요즘 통 못 자고 예민하다면, 이유는 따로 있어요">
+<meta property="og:description" content="AI가 후기 5,019건으로 만든 밤잠 방해 4유형 진단. 왜 못 자는지, 뭘 바꿔야 하는지.">
+<meta property="og:image" content="https://airgoods-oss.github.io/haru/og_body.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Pretendard';src:url('Pretendard-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('Pretendard-Bold.woff2') format('woff2');font-weight:800;font-display:swap}
+:root{
+  --bg:#0B1212;--surface:#121B1B;--surface2:#182525;--line:#243838;
+  --ink:#EAF4F2;--sub:#9AB8B3;--faint:#5E7A76;
+  --teal:#2FC7A8;--teal2:#6EE7C8;--amber:#F5B23C;--rose:#F87199;
+  --grad:linear-gradient(135deg,#2FC7A8 0%,#5B8DEF 100%);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);
+  font-family:'Pretendard',-apple-system,sans-serif;line-height:1.6;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;margin:0 auto;min-height:100dvh;padding:0 22px 60px;position:relative}
+.app::before{content:"";position:fixed;top:-15%;left:50%;transform:translateX(-50%);
+  width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(47,199,168,.2),transparent 62%);filter:blur(30px)}
+.scr{position:relative;z-index:1}
+.hidden{display:none!important}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;margin-top:52px;
+  font-size:12.5px;font-weight:600;color:var(--teal2);
+  background:rgba(47,199,168,.12);border:1px solid rgba(47,199,168,.28);
+  padding:7px 13px;border-radius:99px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 10px var(--teal);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35}}
+h1{font-weight:800;font-size:36px;line-height:1.22;letter-spacing:-.03em;margin:20px 0 0}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.desc{color:var(--sub);font-size:15px;margin-top:16px;line-height:1.72}
+.src{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:14px 16px;font-size:12.5px;color:var(--sub);line-height:1.75}
+.src b{color:var(--teal2)}
+.meta{display:flex;gap:8px;margin-top:16px}
+.pill{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center}
+.pill b{display:block;font-weight:800;font-size:18px;background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.pill span{font-size:12px;color:var(--faint)}
+.cta{position:relative;overflow:hidden;display:block;width:100%;border:0;cursor:pointer;
+  font-family:inherit;font-weight:800;font-size:17px;color:#08201b;
+  background:var(--grad);border-radius:16px;padding:18px;margin-top:24px;
+  box-shadow:0 10px 30px -8px rgba(47,199,168,.5);transition:transform .12s;touch-action:manipulation}
+.cta:not(:disabled):active{transform:scale(.98)}
+.cta::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+  transform:skewX(-20deg);animation:shine 3.2s infinite}
+@keyframes shine{0%{left:-60%}60%,100%{left:130%}}
+.fine{text-align:center;color:var(--faint);font-size:12.5px;margin:14px 0 40px}
+.qhead{display:flex;align-items:center;justify-content:space-between;margin-top:44px;min-height:30px}
+.qcount{font-size:13px;color:var(--sub);font-weight:600}
+.qcount b{color:var(--teal2)}
+.backbtn{all:unset;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700;color:var(--teal2);
+  background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:7px 13px;transition:.13s;touch-action:manipulation}
+.backbtn:active{transform:scale(.95)}
+.prog{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:14px}
+.prog>i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;
+  transition:width .45s cubic-bezier(.4,0,.2,1)}
+.q{font-weight:800;font-size:21px;line-height:1.44;letter-spacing:-.02em;margin:32px 0 22px;
+  min-height:88px;animation:qin .4s cubic-bezier(.2,.7,.2,1)}
+@keyframes qin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{position:relative;text-align:left;border:1.5px solid var(--line);background:var(--surface);
+  color:var(--ink);font-family:inherit;font-size:15px;font-weight:600;line-height:1.45;
+  border-radius:16px;padding:17px 17px 17px 19px;cursor:pointer;transition:.14s;
+  touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.opt:active{transform:scale(.985)}
+.opt.sel{border-color:var(--teal);background:linear-gradient(135deg,rgba(47,199,168,.18),rgba(91,141,239,.1))}
+.opt .ic{float:right;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);margin-left:12px;transition:.14s}
+.opt.sel .ic{border-color:var(--teal);background:var(--teal);box-shadow:0 0 0 4px rgba(47,199,168,.2)}
+.judge{text-align:center;padding-top:120px}
+.spinner{width:60px;height:60px;margin:0 auto 22px;border-radius:50%;
+  border:5px solid var(--surface2);border-top-color:var(--teal);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.jtext{font-weight:800;font-size:18px;animation:jfade .5s}
+@keyframes jfade{from{opacity:.3}to{opacity:1}}
+.rwrap{padding-top:34px;animation:rin .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes rin{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.rcard{border-radius:24px;padding:2px;background:var(--grad);box-shadow:0 20px 50px -16px rgba(47,199,168,.5)}
+.rin{background:linear-gradient(180deg,var(--surface2),var(--surface));border-radius:22px;padding:28px 22px;text-align:center}
+.remoji{font-size:54px;line-height:1}
+.rtype{font-size:12px;font-weight:600;color:var(--faint);letter-spacing:.08em;margin-top:10px}
+.rname{font-weight:800;font-size:25px;letter-spacing:-.02em;margin-top:3px}
+.rname .em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rbase{display:inline-block;margin-top:9px;font-size:12px;font-weight:700;color:var(--amber);
+  background:rgba(245,178,60,.12);border:1px solid rgba(245,178,60,.25);padding:5px 12px;border-radius:99px}
+.rdesc{color:var(--sub);font-size:14.5px;line-height:1.74;margin-top:16px;text-align:left}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:17px;margin-top:12px;text-align:left}
+.sec h3{margin:0 0 9px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px;color:var(--teal2)}
+.sec.tip h3{color:var(--amber)}
+.sec p{margin:0;font-size:14px;color:var(--sub);line-height:1.74}
+.sec .li{font-size:14px;color:var(--sub);line-height:1.7;padding-left:16px;position:relative;margin-top:7px}
+.sec .li::before{content:"·";position:absolute;left:4px;color:var(--teal)}
+.hint{text-align:center;color:var(--faint);font-size:13px;margin-top:18px}
+.social{background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--line);
+  border-radius:18px;padding:20px 18px;margin-top:16px}
+.social .top{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--teal2);font-weight:700}
+.bignum{font-weight:800;font-size:30px;letter-spacing:-.02em;margin:8px 0 2px;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.social .sub{font-size:13.5px;color:var(--sub);line-height:1.7}
+.review{background:var(--surface);border-radius:12px;padding:13px 15px;margin-top:12px;
+  font-size:13.5px;color:var(--ink);line-height:1.65}
+.review .who{display:block;margin-top:6px;font-size:11.5px;color:var(--faint)}
+.stars{color:var(--amber);font-size:13px}
+.btns{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.gbtn{display:block;text-align:center;text-decoration:none;font-family:inherit;font-weight:800;
+  font-size:15.5px;border-radius:15px;padding:16px;cursor:pointer;border:0;touch-action:manipulation}
+.gbtn.pri{background:var(--grad);color:#08201b;box-shadow:0 10px 28px -10px rgba(47,199,168,.5)}
+.gbtn.sec2{background:var(--surface);border:1.5px solid var(--line);color:var(--ink)}
+.reassure{text-align:center;font-size:12px;color:var(--faint);margin-top:10px;line-height:1.6}
+footer{color:var(--faint);font-size:11px;line-height:1.7;margin:26px 0 20px;text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div id="intro" class="scr">
+  <div class="eyebrow"><span class="dot"></span>AI 심리·체질 분석소 · 2단계</div>
+  <h1>요즘 통 못 자고<br><span class="g">아침이 무겁다면</span></h1>
+  <p class="desc">그거, 의지 문제가 아니라 <b style="color:var(--teal2)">밤에 몸을 각성시키는 습관</b> 때문일 수 있어요.
+  저는 AI라서 실제 후기 5,019개를 다 읽었는데, 못 자는 사람들에겐 딱 4가지 패턴이 있더라고요.
+  당신이 어떤 유형인지, 왜 못 자는지, 뭘 바꿔야 하는지 30초면 알려줄게요.</p>
+  <div class="src">📎 <b>이 진단의 근거</b><br>· 실제 구매후기 <b>5,019건</b> 전수 분석 (수면·카페인 언급 다수)<br>· 발견된 실제 각성 패턴 4가지로 분류</div>
+  <div class="meta">
+    <div class="pill"><b>4</b><span>유형</span></div>
+    <div class="pill"><b>6</b><span>문항</span></div>
+    <div class="pill"><b>30초</b><span>소요</span></div>
+  </div>
+  <button class="cta" id="start">내 밤잠 방해 유형 진단하기</button>
+  <p class="fine">후기 데이터 기반 · 재미로 보는 진단 · 의학 진단 아님</p>
+</div>
+
+<div id="quiz" class="scr hidden">
+  <div class="qhead">
+    <button id="back" class="backbtn hidden">← 이전</button>
+    <span class="qcount">Q<b id="qn">1</b> / 6</span>
+  </div>
+  <div class="prog"><i id="bar"></i></div>
+  <p class="q" id="qtext"></p>
+  <div class="opts" id="opts"></div>
+</div>
+
+<div id="judging" class="scr hidden">
+  <div class="judge"><div class="spinner"></div><div class="jtext" id="jtext">수면 습관 접수 중…</div></div>
+</div>
+
+<div id="result" class="scr hidden"></div>
+
+</div>
+
+<script>
+// 4유형: 카페인각성 C · 스트레스각성 S · 야식/속불편 N · 몸무거움/순환 B
+const Q=[
+ {q:"솔직히 하루에 카페인(커피·차·에너지음료) 몇 잔?",a:[["3잔 이상, 오후에도 마심","C"],["스트레스받으면 늘어남","S"],["밤에 뭔가 먹으면서 같이","N"],["별로 안 마시는데도 못 잠","B"]]},
+ {q:"침대에 누우면 제일 먼저 오는 건?",a:[["눈이 말똥말똥, 정신이 또렷","C"],["오만 생각·걱정이 밀려옴","S"],["속이 더부룩하거나 갈증","N"],["몸은 피곤한데 잠이 안 옴","B"]]},
+ {q:"밤 10시 이후 너의 모습은?",a:[["커피·믹스 한 잔 더 생각남","C"],["일·관계 생각에 예민해짐","S"],["야식·주전부리 손이 감","N"],["소파에서 축 처져 있음","B"]]},
+ {q:"자다 깨는 이유가 있다면?",a:[["잠이 얕아 자주 깸","C"],["생각나서·뒤척여서","S"],["속이 불편하거나 화장실","N"],["몸이 무겁고 붓는 느낌","B"]]},
+ {q:"아침에 일어나면?",a:[["잔 것 같지도 않고 두통","C"],["피곤하고 예민, 짜증부터","S"],["얼굴·속이 부은 느낌","N"],["몸이 천근만근, 겨우 일어남","B"]]},
+ {q:"자기 전 마시는 걸 바꿔본다면?",a:[["무카페인이면 시도해볼 만","C"],["따뜻한 거 한 잔이면 좋겠어","S"],["속 편한 거면 좋겠어","N"],["순환에 도움되면 마셔볼래","B"]]},
+];
+const T={
+ C:["☕","카페인 각성형","가장 흔한 유형","오후·저녁 카페인이 밤까지 각성을 끌고 가는 타입. 카페인 반감기는 5~6시간이라 오후 커피가 새벽 수면을 깎아요. '커피 없으면 못 산다'면 이 유형. 대체만 해도 제일 빨리 바뀌어요.",
+   ["오후 2시 이후엔 카페인 끊기. 대신 '마실 게 필요'하니 무카페인으로 갈아타기","자기 1~2시간 전, 따뜻한 무카페인 한 잔으로 몸에 '이제 잘 시간' 신호 주기"]],
+ S:["😮‍💨","스트레스 각성형","의외로 많은 유형","코르티솔(스트레스 호르몬)이 밤에 안 떨어져 뇌가 계속 켜져 있는 타입. 남편·시댁·일 생각에 예민하다면 여기. 몸의 긴장을 푸는 '따뜻한 밤 루틴'이 현실적 해법이에요.",
+   ["자기 전 30분은 폰 대신 따뜻한 차 한 잔으로 뇌 식히기","카페인은 코르티솔을 자극해요. 밤엔 무카페인으로 바꾸면 예민함도 완화"]],
+ N:["🌙","야식·속불편형","밤에 무너지는 유형","밤에 먹은 게 소화되며 속을 깨우고, 부기·갈증으로 잠이 얕아지는 타입. 야식을 못 끊는다면 최소한 '속 편하고 부담 없는 것'으로 바꾸는 게 관건이에요.",
+   ["자기 3시간 전엔 짠 것·기름진 것 멈추기","출출하면 속 편한 따뜻한 무카페인차로 입 달래기"]],
+ B:["🌀","몸무거움·순환형","자도 안 개운한 유형","순환이 더뎌 자도 개운치 않고 아침이 무거운 타입. 카페인을 안 마셔도 못 자고 몸이 붓는다면 여기. 순환을 돕는 따뜻한 습관으로 충분히 관리돼요.",
+   ["자기 전 발 올리기·가벼운 스트레칭으로 순환 풀기","따뜻한 성질의 무카페인차로 몸을 데워 순환 돕기. 찬 음료는 독"]],
+};
+const $=id=>document.getElementById(id);
+let idx=0,sc={C:0,S:0,N:0,B:0},lock=false,hist=[];
+$("start").onclick=()=>{idx=0;hist=[];sc={C:0,S:0,N:0,B:0};
+  $("intro").classList.add("hidden");$("quiz").classList.remove("hidden");render(-1)};
+$("back").onclick=()=>{if(idx<=0||lock)return;idx--;const p=hist.pop();if(p)sc[p.key]--;render(p?p.ai:-1)};
+function render(prevAi){
+  const q=Q[idx];lock=false;
+  $("qn").textContent=idx+1;$("bar").style.width=(idx/Q.length*100)+"%";
+  $("back").classList.toggle("hidden",idx===0);
+  const qt=$("qtext");qt.style.animation="none";void qt.offsetWidth;qt.style.animation="";qt.textContent=q.q;
+  const box=$("opts");box.innerHTML="";
+  q.a.forEach(([t,k],ai)=>{
+    const b=document.createElement("button");b.className="opt";b.innerHTML='<span class="ic"></span>'+t;
+    if(ai===prevAi)b.classList.add("sel");
+    const choose=()=>{if(lock)return;lock=true;
+      box.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"));
+      b.classList.add("sel");sc[k]++;hist.push({key:k,ai:ai});
+      setTimeout(()=>{idx++;idx<Q.length?render(-1):judge()},220)};
+    let tx,ty,tmoved;
+    b.addEventListener("touchstart",e=>{const p=e.changedTouches[0];tx=p.clientX;ty=p.clientY;tmoved=false},{passive:true});
+    b.addEventListener("touchmove",e=>{const p=e.changedTouches[0];if(Math.abs(p.clientX-tx)>12||Math.abs(p.clientY-ty)>12)tmoved=true},{passive:true});
+    b.addEventListener("touchend",e=>{if(!tmoved){e.preventDefault();choose()}});
+    b.addEventListener("click",()=>{if(tx==null)choose()});
+    box.appendChild(b);
+  });
+}
+function judge(){
+  $("quiz").classList.add("hidden");$("judging").classList.remove("hidden");$("bar").style.width="100%";
+  const steps=["수면 습관 접수 중…","후기 5,019건과 대조 중…","각성 패턴 매칭 중…","원인 분석 중…","맞춤 처방 작성 중…"];
+  let si=0;$("jtext").textContent=steps[0];
+  const iv=setInterval(()=>{si++;if(si<steps.length){$("jtext").textContent=steps[si];
+    $("jtext").style.animation="none";void $("jtext").offsetWidth;$("jtext").style.animation="jfade .5s";}
+    else{clearInterval(iv);show()}},540);
+}
+const RV={
+ C:["오후 커피 끊고 이거로 바꾸니까 잠드는 시간이 확 빨라졌어요","무카페인이라 밤에 마셔도 부담 없어서 좋아요. 커피 대신 정착"],
+ S:["스트레스로 뒤척였는데 따뜻하게 한 잔 하니 마음이 가라앉아요","자기 전 루틴으로 마셔요. 예민함이 덜하고 아침이 편해요"],
+ N:["야식 대신 이거 마시니 속도 편하고 다음 날 얼굴이 덜 부어요","밤에 출출할 때 이걸로 달래요. 부담 없어서 계속 마시는 중"],
+ B:["자도 안 개운했는데 따뜻하게 마시니 아침이 한결 가벼워요","순환 안 되는 체질인데 물 대신 이걸로. 몸이 덜 무거워요"],
+};
+function show(){
+  const code=Object.keys(sc).reduce((a,b)=>sc[a]>=sc[b]?a:b);
+  const t=T[code],[emoji,name,base,desc,tips]=t;
+  const tipHtml=tips.map(x=>'<div class="li">'+x+'</div>').join("");
+  const rv=RV[code];
+  $("result").innerHTML='<div class="rwrap">'
+    +'<div class="rcard"><div class="rin">'
+    +'<div class="remoji">'+emoji+'</div>'
+    +'<div class="rtype">당신의 밤잠 방해 유형</div>'
+    +'<div class="rname"><span class="em">'+name+'</span></div>'
+    +'<div class="rbase">'+base+'</div>'
+    +'<div class="rdesc">'+desc+'</div>'
+    +'</div></div>'
+    +'<div class="hint">📸 내 유형 맞으면 캡처해두기 · 관리의 시작</div>'
+    +'<div class="sec tip"><h3>💡 이 유형, 이렇게 관리하세요</h3>'+tipHtml+'</div>'
+    +'<div class="social">'
+    +'<div class="top">✔ 당신과 같은 <b>'+name.replace(/[☕😮‍💨🌙🌀]/g,"").trim()+'</b>이 가장 많이 선택한 것</div>'
+    +'<div class="bignum">재구매율 89%</div>'
+    +'<div class="sub">잠 못 자던 후기들이 공통으로 찾은 답은 <b style="color:var(--ink)">호박·팥·우엉 무카페인차(하루뚫차)</b>였어요. '
+    +'카페인이 0이라 밤에 마셔도 각성 안 되고, 따뜻하게 자기 전 루틴으로 딱이거든요. 평점 4.9 · 리뷰 5,019개.</div>'
+    +'<div class="review"><span class="stars">★★★★★</span> "'+rv[0]+'"<span class="who">— '+name.replace(/[☕😮‍💨🌙🌀]/g,"").trim()+' 실제 구매후기</span></div>'
+    +'<div class="review"><span class="stars">★★★★★</span> "'+rv[1]+'"<span class="who">— 실제 구매후기</span></div>'
+    +'</div>'
+    +'<div class="btns">'
+    +'<a class="gbtn pri" href="https://m.smartstore.naver.com/airgoods/products/5797777173?nt_source=threads&nt_medium=social&nt_detail=sleep_'+code+'">내 유형이 고른 것 보러가기 →</a>'
+    +'<button class="gbtn sec2" onclick="location.reload()">다시 진단하기</button>'
+    +'</div>'
+    +'<div class="reassure">🔒 사기 전에 시음팩 먼저 마셔보고, 별로면 배송비까지 100% 환불 — 잃을 게 없는 조건이에요</div>'
+    +'<footer>근거: 실제 구매후기 5,019건 · 유형은 후기 패턴 기반 해석이며 의학 진단 아님 · 결과 저장 안 됨</footer>'
+    +'</div>';
+  $("judging").classList.add("hidden");$("result").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>
