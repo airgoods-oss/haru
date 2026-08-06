@@ -51,7 +51,7 @@ h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;c
 .cta{position:relative;overflow:hidden;display:block;width:100%;border:0;cursor:pointer;
   font-family:inherit;font-weight:800;font-size:17px;color:#08201b;
   background:var(--grad);border-radius:16px;padding:18px;margin-top:24px;
-  box-shadow:0 10px 30px -8px rgba(47,199,168,.5);transition:transform .12s}
+  box-shadow:0 10px 30px -8px rgba(47,199,168,.5);transition:transform .12s;touch-action:manipulation}
 .cta:not(:disabled):active{transform:scale(.98)}
 .cta::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
@@ -73,7 +73,8 @@ h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;c
 .opts{display:flex;flex-direction:column;gap:11px}
 .opt{position:relative;text-align:left;border:1.5px solid var(--line);background:var(--surface);
   color:var(--ink);font-family:inherit;font-size:15px;font-weight:600;line-height:1.45;
-  border-radius:16px;padding:17px 17px 17px 19px;cursor:pointer;transition:.14s}
+  border-radius:16px;padding:17px 17px 17px 19px;cursor:pointer;transition:.14s;
+  touch-action:manipulation;-webkit-user-select:none;user-select:none}
 .opt:active{transform:scale(.985)}
 .opt.sel{border-color:var(--teal);background:linear-gradient(135deg,rgba(47,199,168,.18),rgba(91,141,239,.1))}
 .opt .ic{float:right;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);margin-left:12px;transition:.14s}
@@ -115,7 +116,7 @@ h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;c
 .stars{color:var(--amber);font-size:13px}
 .btns{display:flex;flex-direction:column;gap:10px;margin-top:14px}
 .gbtn{display:block;text-align:center;text-decoration:none;font-family:inherit;font-weight:800;
-  font-size:15.5px;border-radius:15px;padding:16px;cursor:pointer;border:0}
+  font-size:15.5px;border-radius:15px;padding:16px;cursor:pointer;border:0;touch-action:manipulation}
 .gbtn.pri{background:var(--grad);color:#08201b;box-shadow:0 10px 28px -10px rgba(47,199,168,.5)}
 .gbtn.sec2{background:var(--surface);border:1.5px solid var(--line);color:var(--ink)}
 .reassure{text-align:center;font-size:12px;color:var(--faint);margin-top:10px;line-height:1.6}
@@ -193,10 +194,15 @@ function render(prevAi){
   q.a.forEach(([t,k],ai)=>{
     const b=document.createElement("button");b.className="opt";b.innerHTML='<span class="ic"></span>'+t;
     if(ai===prevAi)b.classList.add("sel");
-    b.onclick=()=>{if(lock)return;lock=true;
+    const choose=()=>{if(lock)return;lock=true;
       box.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"));
       b.classList.add("sel");sc[k]++;hist.push({key:k,ai:ai});
-      setTimeout(()=>{idx++;idx<Q.length?render(-1):judge()},260)};
+      setTimeout(()=>{idx++;idx<Q.length?render(-1):judge()},220)};
+    let tx,ty,tmoved;
+    b.addEventListener("touchstart",e=>{const p=e.changedTouches[0];tx=p.clientX;ty=p.clientY;tmoved=false},{passive:true});
+    b.addEventListener("touchmove",e=>{const p=e.changedTouches[0];if(Math.abs(p.clientX-tx)>12||Math.abs(p.clientY-ty)>12)tmoved=true},{passive:true});
+    b.addEventListener("touchend",e=>{if(!tmoved){e.preventDefault();choose()}});
+    b.addEventListener("click",()=>{if(tx==null)choose()});
     box.appendChild(b);
   });
 }
